@@ -1,5 +1,9 @@
+"""
+Import random function
+"""
 import random
 
+# Global variables
 player = {
     "row": 3,
     "column": 2,
@@ -16,17 +20,21 @@ skel = {
     "column": random.randint(0, 4)
 }
 
+legend = {
+    "empty": ". ",
+    "player": "P ",
+    "wall": "# ",
+    "skel": "S ",
+    "door": "E "
+}
+
 
 def print_positions():
     """
     Temporary function to print player's position
     """
-    player_row = player["row"]
-    player_column = player["column"]
-    skel_row = skel["row"]
-    skel_column = skel["column"]
-    print(f"Player:\nrow: {player_row}, column: {player_column}")
-    print(f"Skeleton:\nrow: {skel_row}, column: {skel_column}")
+    print(f"Player:{player}")
+    print(f"Skeleton:{skel}")
 
 
 def create_map():
@@ -39,6 +47,64 @@ def create_map():
     global map
     rows, cols = (5, 5)
     map = [["empty" for i in range(cols)] for j in range(rows)]
+
+
+def player_action_choice():
+    """
+    Asks for input for player action
+    Rest, see map or move
+    """
+    choice = input("Would you like to rest ('1'), look at your map ('2')\
+ or move('3')?")
+    if choice == "1":
+        rest()
+    elif choice == "2":
+        show_map()
+    elif choice == "3":
+        player_movement_choice()
+        check_movement_result()
+    else:
+        print("Wrong input, please try again\n")
+        player_action_choice()
+
+
+def rest():
+    """
+    Gives a small chance to the player to gain one life back
+    """
+    chance = random.randint(1, 10)
+    if chance == 1:
+        player["life"] += 1
+        print("Your rest was fruitful, you have gained a life!")
+    else:
+        print("You had nightmares and woke up the same as before...")
+
+
+def show_map():
+    """
+    Shows the map to the player and how many lives they have left
+    """
+    print("Map:\n")
+    map_design = draw_map()
+    print(map_design)
+    life = player["life"]
+    print(f"\nYou have {life} lives left")
+
+
+def draw_map():
+    """
+    Creates the map to be viewed by player
+    """
+    design = [[legend["empty"] for x in range(5)] for y in range(5)]
+    design[player["row"]][player["column"]] = legend["player"]
+    design[skel["row"]][skel["column"]] = legend["skel"]
+    design[door["row"]][door["column"]] = legend["door"]
+    map_string = ""
+    for y in range(5):
+        for x in range(5):
+            map_string += design[x][y]
+        map_string += "\n"
+    return map_string
 
 
 def player_movement_choice():
@@ -163,8 +229,7 @@ def main():
     print("Starting game...\n")
     create_map()
     while player["life"]:
-        player_movement_choice()
-        check_movement_result()
+        player_action_choice()
         print_positions()
     defeat()
 
