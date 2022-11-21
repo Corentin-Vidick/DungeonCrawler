@@ -3,6 +3,11 @@ player = {
     "column": 2
 }
 
+exit = {
+    "row": 4,
+    "column": 4
+}
+
 
 def print_player_position():
     """
@@ -23,7 +28,6 @@ def create_map():
     global map
     rows, cols = (5, 5)
     map = [["empty" for i in range(cols)] for j in range(rows)]
-    map[4][4] = "exit"
 
 
 def player_movement_choice():
@@ -47,7 +51,7 @@ def player_movement_choice():
     if move_right:
         print('"right" to go right')
     direction = input("I want to go...   ")
-    if direction != "up" and "down" and "left" and "right":
+    if direction not in ("up", "left", "down", "right"):
         print("Wrong input, please try again\n")
         player_movement_choice()
     move_player(direction)
@@ -68,10 +72,21 @@ def move_player(direction):
         player["column"] -= 1
     if direction == "right":
         player["column"] += 1
-    if player["row"] < 0 or player["row"] > 4 or player["column"] < 0 or player["column"] > 4:
+    if player["row"] < 0 or player["row"] > 4 or\
+       player["column"] < 0 or player["column"] > 4:
         player["row"], player["column"] = (previous_row, previous_column)
         print("Move impossible, please try again")
         player_movement_choice()
+
+
+def victory():
+    """
+    When player reaches the exit
+    Resets player position
+    """
+    print("\n\nYou made it out!\n!!!Congratulations!!!\n\n")
+    player["row"], player["column"] = (0, 0) 
+    main()
 
 
 def main():
@@ -80,9 +95,11 @@ def main():
     """
     print("Starting game...\n")
     create_map()
-    print_player_position()
-    player_movement_choice()
-    print_player_position()
+    while 1:
+        player_movement_choice()
+        if player["row"] == exit["row"] and player["column"] == exit["column"]:
+            victory()
+        print_player_position()
 
 
 main()
