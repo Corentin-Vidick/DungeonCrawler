@@ -1,3 +1,13 @@
+player = {
+    """
+    Defines starting position of player
+    Makes player's position available throughout program
+    """
+    "row": 3,
+    "column": 2
+}
+
+
 def create_map():
     """
     Creates map array
@@ -19,15 +29,10 @@ def player_movement_choice():
     """
     print("Checking possible movements...\n")
     move_up, move_down, move_left, move_right = (True, True, True, True)
-    for i in range(len(map)):
-        for j in range(len(map)):
-            if map[i][j] == "player":
-                player_row = i
-                player_column = j
-    move_up = False if player_row == 0 else True
-    move_down = False if player_row == 4 else True
-    move_left = False if player_column == 0 else True
-    move_right = False if player_column == 4 else True
+    move_up = False if player["row"] == 0 else True
+    move_down = False if player["row"] == 4 else True
+    move_left = False if player["column"] == 0 else True
+    move_right = False if player["column"] == 4 else True
     print("Would you like to go:")
     if move_up:
         print('"up" to go up')
@@ -37,8 +42,20 @@ def player_movement_choice():
         print('"left" to go left')
     if move_right:
         print('"right" to go right')
-    direction = input("I want to go...")
+    direction = input("I want to go...   ")
+    if direction != "up" and "down" and "left" and "right":
+        print("Wrong input, please try again\n")
+        player_movement_choice()
     return direction
+
+
+def move_player(direction):
+    """
+    Moves player if possible
+    Otherwise returns to asking direction
+    """
+    print("Moving player...")
+    print(direction)
 
 
 def main():
@@ -48,6 +65,7 @@ def main():
     print("Starting game...\n")
     create_map()
     direction = player_movement_choice()
+    move_player(direction)
 
 
 main()
