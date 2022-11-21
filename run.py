@@ -1,11 +1,16 @@
 player = {
-    """
-    Defines starting position of player
-    Makes player's position available throughout program
-    """
     "row": 3,
     "column": 2
 }
+
+
+def print_player_position():
+    """
+    Temporary function to print player's position
+    """
+    player_row = player["row"]
+    player_column = player["column"]
+    print(f"row: {player_row}, column: {player_column}")
 
 
 def create_map():
@@ -18,7 +23,6 @@ def create_map():
     global map
     rows, cols = (5, 5)
     map = [["empty" for i in range(cols)] for j in range(rows)]
-    map[2][2] = "player"
     map[4][4] = "exit"
 
 
@@ -46,7 +50,7 @@ def player_movement_choice():
     if direction != "up" and "down" and "left" and "right":
         print("Wrong input, please try again\n")
         player_movement_choice()
-    return direction
+    move_player(direction)
 
 
 def move_player(direction):
@@ -54,8 +58,20 @@ def move_player(direction):
     Moves player if possible
     Otherwise returns to asking direction
     """
-    print("Moving player...")
-    print(direction)
+    print("Moving player...\n")
+    previous_row, previous_column = (player["row"], player["column"])
+    if direction == "up":
+        player["row"] -= 1
+    if direction == "down":
+        player["row"] += 1
+    if direction == "left":
+        player["column"] -= 1
+    if direction == "right":
+        player["column"] += 1
+    if player["row"] < 0 or player["row"] > 4 or player["column"] < 0 or player["column"] > 4:
+        player["row"], player["column"] = (previous_row, previous_column)
+        print("Move impossible, please try again")
+        player_movement_choice()
 
 
 def main():
@@ -64,8 +80,9 @@ def main():
     """
     print("Starting game...\n")
     create_map()
-    direction = player_movement_choice()
-    move_player(direction)
+    print_player_position()
+    player_movement_choice()
+    print_player_position()
 
 
 main()
