@@ -98,23 +98,61 @@ def check_movement_result():
     if player["row"] == door["row"] and player["column"] == door["column"]:
         victory()
     if player["row"] == skel["row"] and player["column"] == skel["column"]:
+        encounter()
+
+
+def encounter():
+    """
+    When player encounters a skeleton
+    """
+    fight_or_flight = input("You have encountered a skeleton! Would you like to\
+        'Y' fight or 'N' retreat?   ")
+    if fight_or_flight == "Y":
         fight()
+    elif fight_or_flight == "N":
+        direction = random.randint(1, 2)
+        print(direction)
+        if direction == 1:
+            print("You failed to escape, you have to fight\n")
+            fight()
+        elif direction == 2:
+            print("You run away...\n")
+            player_movement_choice()
+    else:
+        print("Wrong input, please try again\n")
+        encounter()
 
 
 def fight():
     """
-    When player encounters a skeleton
+    Fight against skeleton
     """
-    print("Fighting...\n")
+    print("You fight the skeleton. He hits you first\
+but you manage to defeat it!")
+    player["life"] -= 1
+    skel["row"] = ""
+    skel["column"] = ""
 
 
 def victory():
     """
     When player reaches the exit
-    Resets player position
+    Resets player position and life
     """
     print("\n\nYou made it out!\n!!!Congratulations!!!\n\n")
-    player["row"], player["column"] = (0, 0) 
+    player["row"], player["column"] = (0, 0)
+    player["life"] = 2
+    main()
+
+
+def defeat():
+    """
+    When player runs out of lives
+    Resets player position
+    """
+    print("\n\nYou died!\n!!!Better luck next time!!!\n\n")
+    player["row"], player["column"] = (0, 0)
+    player["life"] = 2
     main()
 
 
@@ -124,10 +162,11 @@ def main():
     """
     print("Starting game...\n")
     create_map()
-    while 1:
+    while player["life"]:
         player_movement_choice()
         check_movement_result()
         print_positions()
+    defeat()
 
 
 main()
