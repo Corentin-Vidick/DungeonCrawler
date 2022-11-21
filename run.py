@@ -1,21 +1,32 @@
+import random
+
 player = {
     "row": 3,
-    "column": 2
+    "column": 2,
+    "life": 2
 }
 
-exit = {
+door = {
     "row": 4,
     "column": 4
 }
 
+skel = {
+    "row": random.randint(0, 4),
+    "column": random.randint(0, 4)
+}
 
-def print_player_position():
+
+def print_positions():
     """
     Temporary function to print player's position
     """
     player_row = player["row"]
     player_column = player["column"]
-    print(f"row: {player_row}, column: {player_column}")
+    skel_row = skel["row"]
+    skel_column = skel["column"]
+    print(f"Player:\nrow: {player_row}, column: {player_column}")
+    print(f"Skeleton:\nrow: {skel_row}, column: {skel_column}")
 
 
 def create_map():
@@ -79,6 +90,24 @@ def move_player(direction):
         player_movement_choice()
 
 
+def check_movement_result():
+    """
+    Checks what the player has encountered after their move
+    """
+    print("Checking where you are...\n")
+    if player["row"] == door["row"] and player["column"] == door["column"]:
+        victory()
+    if player["row"] == skel["row"] and player["column"] == skel["column"]:
+        fight()
+
+
+def fight():
+    """
+    When player encounters a skeleton
+    """
+    print("Fighting...\n")
+
+
 def victory():
     """
     When player reaches the exit
@@ -97,9 +126,8 @@ def main():
     create_map()
     while 1:
         player_movement_choice()
-        if player["row"] == exit["row"] and player["column"] == exit["column"]:
-            victory()
-        print_player_position()
+        check_movement_result()
+        print_positions()
 
 
 main()
