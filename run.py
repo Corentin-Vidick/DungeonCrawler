@@ -50,13 +50,13 @@ def create_map():
     """
     # Create empty map
     for i in range(25):
-        room = Room("empty", "nothing", i)
+        room = Room("dark", "nothing", i)
         rooms.append(room)
     # Place player
     rooms[0].status = "player"
-    # Place exit door
+    # Place exit door - remove after testing
     rooms[24].status = "door"
-    # Place skeleton
+    # Place skeleton - remove after testing
     rooms[skel["room"]].status = "skel"
 
 
@@ -179,7 +179,7 @@ def check_movement_result():
     """
     Checks what the player has encountered after their move
     """
-    print("\n...Checking where you are...\n")
+    print("...Checking where you are...")
     if player["room"] == door["room"]:
         victory()
     elif player["room"] == skel["room"]:
@@ -193,15 +193,15 @@ def no_event():
     When player enters an empty room
     """
     print("\nYou enter the room slowly, trying to look in every direction \
-at the same time...\n\nThe room is safe, but empty")
+at the same time...\nThe room is safe, but empty\n")
 
 
 def encounter():
     """
     When player encounters a skeleton
     """
-    fight_or_flight = input("\nYou have encountered a skeleton! Would you like \
-to fight ('1') or retreat ('2')?\n...")
+    fight_or_flight = input("\nYou have encountered a skeleton! Would you \
+like to fight ('1') or retreat ('2')?\n...")
     if fight_or_flight == "1":
         fight()
     elif fight_or_flight == "2":
