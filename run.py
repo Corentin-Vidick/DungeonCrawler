@@ -158,7 +158,7 @@ def move_player(direction):
         rooms[player["room"]].status = "empty"
         player["room"] -= 5
         rooms[player["room"]].status = "player"
-    elif direction == "2" and player["room"] < 19:
+    elif direction == "2" and player["room"] < 20:
         rooms[player["room"]].status = "empty"
         player["room"] += 5
         rooms[player["room"]].status = "player"
@@ -182,22 +182,32 @@ def check_movement_result():
     print("\n...Checking where you are...\n")
     if player["room"] == door["room"]:
         victory()
-    if player["room"] == skel["room"]:
+    elif player["room"] == skel["room"]:
         encounter()
+    else:
+        no_event()
+
+
+def no_event():
+    """
+    When player enters an empty room
+    """
+    print("\nYou enter the room slowly, trying to look in every direction \
+at the same time...\n\nThe room is safe, but empty")
 
 
 def encounter():
     """
     When player encounters a skeleton
     """
-    fight_or_flight = input("You have encountered a skeleton! Would you like \
+    fight_or_flight = input("\nYou have encountered a skeleton! Would you like \
 to fight ('1') or retreat ('2')?\n...")
     if fight_or_flight == "1":
         fight()
     elif fight_or_flight == "2":
         flight()
     else:
-        print("Wrong input, please try again\n")
+        print("\nWrong input, please try again\n")
         encounter()
 
 
@@ -205,7 +215,7 @@ def fight():
     """
     Fight against a skeleton
     """
-    print("You fight the skeleton. He hits you first \
+    print("\nYou fight the skeleton. He hits you first \
 but you manage to defeat it!")
     player["life"] -= 1
     rooms[skel["room"]].status = "player"
@@ -217,10 +227,10 @@ def flight():
     """
     direction = random.randint(1, 2)
     if direction == 1:
-        print("You failed to escape, you have to fight\n")
+        print("\nYou failed to escape, you have to fight")
         fight()
     elif direction == 2:
-        print("You run away...\n")
+        print("\nYou run away...\n")
         player_movement_choice()
 
 
