@@ -5,28 +5,39 @@ import random
 
 # Global variables
 player = {
-    "row": 3,
-    "column": 2,
+    "room": 1,
     "life": 2
 }
 
 door = {
-    "row": 4,
-    "column": 4
+    "room": 24
 }
 
 skel = {
-    "row": random.randint(0, 4),
-    "column": random.randint(0, 4)
+    "room": random.randint(3, 23)
 }
 
 legend = {
+    "dark": "  ",
     "empty": ". ",
     "player": "P ",
     "wall": "# ",
     "skel": "S ",
     "door": "E "
 }
+
+rooms = []
+
+
+class Room:
+    """
+    Creates an empty, dark room
+    """
+    def __init__(self, status, contents, row, column):
+        self.status = status
+        self.contents = contents
+        self.row = row
+        self.column = column
 
 
 def print_positions():
@@ -43,10 +54,17 @@ def create_map():
     Initialise player position
     Initialise exit position
     """
-    print("Creating map...\n")
-    global map
-    rows, cols = (5, 5)
-    map = [["empty" for i in range(cols)] for j in range(rows)]
+    # Create empty map
+    for x in range(5):
+        for y in range(5):
+            room = Room("empty", "nothing", x, y)
+            rooms.append(room)
+    # Place player
+    rooms[1].status = "player"
+    # Place exit door
+    rooms[24].status = "door"
+    # Place skeleton
+    rooms[skel["room"]].status = "skel"
 
 
 def player_action_choice():
@@ -85,8 +103,10 @@ def show_map():
     Shows the map to the player and how many lives they have left
     """
     print("Map:\n")
+    # one line the assignement and print?
     map_design = draw_map()
     print(map_design)
+    # end of one line?
     life = player["life"]
     print(f"\nYou have {life} lives left")
 
@@ -95,14 +115,12 @@ def draw_map():
     """
     Creates the map to be viewed by player
     """
-    design = [[legend["empty"] for x in range(5)] for y in range(5)]
-    design[player["row"]][player["column"]] = legend["player"]
-    design[skel["row"]][skel["column"]] = legend["skel"]
-    design[door["row"]][door["column"]] = legend["door"]
     map_string = ""
-    for y in range(5):
-        for x in range(5):
-            map_string += design[x][y]
+    pos = 0
+    for x in range(5):
+        for y in range(5):
+            map_string += (legend[rooms[pos].status])
+            pos += 1
         map_string += "\n"
     return map_string
 
@@ -114,10 +132,12 @@ def player_movement_choice():
     """
     print("Checking possible movements...\n")
     move_up, move_down, move_left, move_right = (True, True, True, True)
-    move_up = False if player["row"] == 0 else True
-    move_down = False if player["row"] == 4 else True
-    move_left = False if player["column"] == 0 else True
-    move_right = False if player["column"] == 4 else True
+    for i in range(25):
+        if rooms[i].status == "player":
+            move_up = False if i in (0, 1, 2, 3, 4) else True
+            move_down = False if i in (20, 21, 22, 23, 24) else True
+            move_left = False if i in (0, 5, 10, 15, 20) else True
+            move_right = False if i in (4, 9, 14, 19, 24) else True
     print("Would you like to go:")
     if move_up:
         print('"up" to go up')
@@ -139,21 +159,29 @@ def move_player(direction):
     Moves player if possible
     Otherwise returns to asking direction
     """
+    # Needs some work on conditions for movement
     print("Moving player...\n")
-    previous_row, previous_column = (player["row"], player["column"])
-    if direction == "up":
-        player["row"] -= 1
-    if direction == "down":
-        player["row"] += 1
-    if direction == "left":
-        player["column"] -= 1
-    if direction == "right":
-        player["column"] += 1
-    if player["row"] < 0 or player["row"] > 4 or\
-       player["column"] < 0 or player["column"] > 4:
-        player["row"], player["column"] = (previous_row, previous_column)
-        print("Move impossible, please try again")
-        player_movement_choice()
+#    previous_room = player["room"]
+    if direction == "up" and player["room"] > 4:
+        rooms[player["room"]].status = "empty"
+        player["room"] -= 5
+        rooms[player["room"]].status = "player"
+    if direction == "down" and player["room"] < 19:
+        rooms[player["room"]].status = "empty"
+        player["room"] += 5
+        rooms[player["room"]].status = "player"
+    if direction == "left" and player["room"] not in (0, 5, 10, 15, 20):
+        rooms[player["room"]].status = "empty"
+        player["room"] -= 1
+        rooms[player["room"]].status = "player"
+    if direction == "right" and player["room"] not in (4, 9, 14, 19, 24):
+        rooms[player["room"]].status = "empty"
+        player["room"] += 1
+        rooms[player["room"]].status = "player"
+#    if player["room"] < 0 or player["room"] > 24:
+#        player["room"] = previous_room
+#        print("Move impossible, please try again")
+#        player_movement_choice()
 
 
 def check_movement_result():
@@ -161,9 +189,9 @@ def check_movement_result():
     Checks what the player has encountered after their move
     """
     print("Checking where you are...\n")
-    if player["row"] == door["row"] and player["column"] == door["column"]:
+    if player["room"] == door["room"]:
         victory()
-    if player["row"] == skel["row"] and player["column"] == skel["column"]:
+    if player["room"] == skel["room"]:
         encounter()
 
 
@@ -171,8 +199,8 @@ def encounter():
     """
     When player encounters a skeleton
     """
-    fight_or_flight = input("You have encountered a skeleton! Would you like to\
-        'Y' fight or 'N' retreat?   ")
+    fight_or_flight = input("You have encountered a skeleton! Would you like \
+to fight ('Y') or retreat ('N')?   ")
     if fight_or_flight == "Y":
         fight()
     elif fight_or_flight == "N":
@@ -193,11 +221,10 @@ def fight():
     """
     Fight against skeleton
     """
-    print("You fight the skeleton. He hits you first\
+    print("You fight the skeleton. He hits you first \
 but you manage to defeat it!")
     player["life"] -= 1
-    skel["row"] = ""
-    skel["column"] = ""
+    rooms[skel["room"]].status = "player"
 
 
 def victory():
