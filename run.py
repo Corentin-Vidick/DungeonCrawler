@@ -24,7 +24,6 @@ class Entity:
         self.attack = attack
 
 
-# Create player
 player = Entity(0, 2, 1)
 skeleton = Entity(random.randint(3, 23), 1, 1)
 door = Entity(24, None, None)
@@ -222,6 +221,8 @@ def fight():
     print("\nYou fight the skeleton. He hits you first \
 but you manage to defeat it!")
     player.health -= 1
+    if player.health == 0:
+        defeat()
     rooms[skeleton.pos].status = "player"
 
 
@@ -244,9 +245,7 @@ def victory():
     Resets player position and life
     """
     print("\n\nYou made it out!\n!!!Congratulations!!!\n\n")
-    player.pos = 0
-    player.health = 2
-    main()
+    player.health = 0
 
 
 def defeat():
@@ -255,20 +254,14 @@ def defeat():
     Resets player position
     """
     print("\n\nYou died!\n!!!Better luck next time!!!\n\n")
-    player.pos = 0
-    player.health = 2
-    main()
 
 
-def main():
-    """
-    Main function, runs the game
-    """
+if __name__ == "__main__":
     print("Starting game...\n")
     create_map()
     while player.health:
         player_action_choice()
-    defeat()
-
-
-main()
+    # map = []
+    player = Entity(0, 2, 1)
+    skeleton = Entity(random.randint(3, 23), 1, 1)
+    door = Entity(24, None, None)
