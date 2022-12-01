@@ -4,19 +4,6 @@ Import random function
 import random
 
 # Global variables
-player = {
-    "room": 0,
-    "life": 2
-}
-
-door = {
-    "room": 24
-}
-
-skel = {
-    "room": random.randint(3, 23)
-}
-
 legend = {
     "dark": "  ",
     "empty": ". ",
@@ -25,6 +12,23 @@ legend = {
     "skel": "S ",
     "door": "E "
 }
+
+
+class Entity:
+    """
+    Creates an entity, player, enemy...
+    """
+    def __init__(self, pos, health, attack):
+        self.pos = pos
+        self.health = health
+        self.attack = attack
+
+
+# Create player
+player = Entity(0, 2, 1)
+skeleton = Entity(random.randint(3, 23), 1, 1)
+door = Entity(24, None, None)
+
 
 rooms = []
 
@@ -53,11 +57,11 @@ def create_map():
         room = Room("dark", "nothing", i)
         rooms.append(room)
     # Place player
-    rooms[0].status = "player"
+    rooms[player.pos].status = "player"
     # Place exit door - remove after testing
-    rooms[24].status = "door"
+    rooms[door.pos].status = "door"
     # Place skeleton - remove after testing
-    rooms[skel["room"]].status = "skel"
+    rooms[skeleton.pos].status = "skel"
 
 
 def player_action_choice():
@@ -85,7 +89,7 @@ def rest():
     """
     chance = random.randint(1, 10)
     if chance == 1:
-        player["life"] += 1
+        player.health += 1
         print("Your rest was fruitful, you have gained a life!")
     else:
         print("You had nightmares and woke up the same as before...")
@@ -100,7 +104,7 @@ def show_map():
     map_design = draw_map()
     print(map_design)
     # end of one line?
-    life = player["life"]
+    life = player.health
     print(f"You have {life} health left\n")
 
 
@@ -154,22 +158,22 @@ def move_player(direction):
     """
     # Needs some work on conditions for movement
     print("\n...Moving player...\n")
-    if direction == "1" and player["room"] > 4:
-        rooms[player["room"]].status = "empty"
-        player["room"] -= 5
-        rooms[player["room"]].status = "player"
-    elif direction == "2" and player["room"] < 20:
-        rooms[player["room"]].status = "empty"
-        player["room"] += 5
-        rooms[player["room"]].status = "player"
-    elif direction == "3" and player["room"] not in (0, 5, 10, 15, 20):
-        rooms[player["room"]].status = "empty"
-        player["room"] -= 1
-        rooms[player["room"]].status = "player"
-    elif direction == "4" and player["room"] not in (4, 9, 14, 19, 24):
-        rooms[player["room"]].status = "empty"
-        player["room"] += 1
-        rooms[player["room"]].status = "player"
+    if direction == "1" and player.pos > 4:
+        rooms[player.pos].status = "empty"
+        player.pos -= 5
+        rooms[player.pos].status = "player"
+    elif direction == "2" and player.pos < 20:
+        rooms[player.pos].status = "empty"
+        player.pos += 5
+        rooms[player.pos].status = "player"
+    elif direction == "3" and player.pos not in (0, 5, 10, 15, 20):
+        rooms[player.pos].status = "empty"
+        player.pos -= 1
+        rooms[player.pos].status = "player"
+    elif direction == "4" and player.pos not in (4, 9, 14, 19, 24):
+        rooms[player.pos].status = "empty"
+        player.pos += 1
+        rooms[player.pos].status = "player"
     else:
         print("Impossible move, please try again\n")
         player_movement_choice()
@@ -180,9 +184,9 @@ def check_movement_result():
     Checks what the player has encountered after their move
     """
     print("...Checking where you are...")
-    if player["room"] == door["room"]:
+    if player.pos == door.pos:
         victory()
-    elif player["room"] == skel["room"]:
+    elif player.pos == skeleton.pos:
         encounter()
     else:
         no_event()
@@ -217,8 +221,8 @@ def fight():
     """
     print("\nYou fight the skeleton. He hits you first \
 but you manage to defeat it!")
-    player["life"] -= 1
-    rooms[skel["room"]].status = "player"
+    player.health -= 1
+    rooms[skeleton.pos].status = "player"
 
 
 def flight():
@@ -240,8 +244,8 @@ def victory():
     Resets player position and life
     """
     print("\n\nYou made it out!\n!!!Congratulations!!!\n\n")
-    player["room"] = 0
-    player["life"] = 2
+    player.pos = 0
+    player.health = 2
     main()
 
 
@@ -251,8 +255,8 @@ def defeat():
     Resets player position
     """
     print("\n\nYou died!\n!!!Better luck next time!!!\n\n")
-    player["room"] = 0
-    player["life"] = 2
+    player.pos = 0
+    player.health = 2
     main()
 
 
@@ -262,7 +266,7 @@ def main():
     """
     print("Starting game...\n")
     create_map()
-    while player["life"]:
+    while player.health:
         player_action_choice()
     defeat()
 
