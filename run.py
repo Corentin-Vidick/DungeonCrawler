@@ -206,6 +206,7 @@ def move_player(direction):
     """
     # Needs some work on conditions for movement
     print("\n...Moving player...\n")
+    print(direction)
     if direction == "1" and player.pos > 4:
         rooms[player.pos].status = "empty"
         player.pos -= 5
@@ -302,8 +303,9 @@ def flight():
         print("\nYou failed to escape, you have to fight")
         fight()
     elif direction == 2:
-        print("\nYou run away...\n")
-        player_movement_choice()
+        print("\nYou run away blindly...\n")
+        i = str(random.randint(1, 4))
+        move_player(i)
 
 
 def victory():
