@@ -25,7 +25,7 @@ class Entity:
 
 
 player = Entity(0, 2, 1)
-skeleton = Entity(random.randint(3, 23), 1, 1)
+skeleton = Entity(random.randint(3, 23), 2, 1)
 door = Entity(24, None, None)
 
 
@@ -43,6 +43,55 @@ class Room:
         self.status = status
         self.contents = contents
         self.pos = pos
+
+
+def menu():
+    """
+    Displays the start of game menu: play, rules and credits
+    """
+    print("Welcome to Coco's Dungeon Crawler\n\n")
+    print("\n 1 - New game\n")
+    print("\n 2 - Rules\n")
+    print("\n 3 - Credits\n")
+    while True:
+        i = input("\n...")
+        if i in ("1", "2", "3"):
+            break
+    if i == "1":
+        print("Let's go!\n\n\n")
+    elif i == "2":
+        rules()
+    elif i == "3":
+        dev_credits()
+
+
+def rules():
+    """
+    Displays the rules to the player
+    """
+    print("Hello adventurer, here is your challenge:\n\nYou will have to find \
+your way through the dungeon and escape through the door.\n\nCareful though\
+, skeletons are guarding the area.\n\nEach turn, you will choose a \
+direction to go, your life depends on your choices!")
+    print("\n\n\nEnter any key to go back to menu")
+    while True:
+        i = input()
+        if i:
+            break
+    menu()
+
+
+def dev_credits():
+    """
+    Displays the credits to the player
+    """
+    print("\n\n\nThis game is developed by Corentin Vidick\n\n\n")
+    print("Enter any key to go back to menu")
+    while True:
+        i = input()
+        if i:
+            break
+    menu()
 
 
 def create_map():
@@ -218,12 +267,30 @@ def fight():
     """
     Fight against a skeleton
     """
-    print("\nYou fight the skeleton. He hits you first \
-but you manage to defeat it!")
-    player.health -= 1
+    print("\nYou fight the skeleton...\n")
+    while player.health != 0 and skeleton.health != 0:
+        x = random.randint(1, 10)
+        if x == 1:
+            print("\nBoth miss!")
+        elif x in (2, 3):
+            print("\nThe skeleton lands a blow!")
+            player.health -= skeleton.attack
+        elif x == 4:
+            print("\nYou both hit each other at the same time!")
+            player.health -= skeleton.attack
+            skeleton.health -= player.attack
+        elif x == 5:
+            print("\nYou manage to do a critical hit!")
+            skeleton.health -= player.attack + 1
+        else:
+            print("\nYou hit the skeleton!")
+            skeleton.health -= player.attack
     if player.health == 0:
         defeat()
-    rooms[skeleton.pos].status = "player"
+    elif skeleton.health == 0:
+        print("\nYou defeated the skeleton! A pile of bones now lays at your \
+feet\n")
+        rooms[skeleton.pos].status = "player"
 
 
 def flight():
@@ -258,6 +325,7 @@ def defeat():
 
 if __name__ == "__main__":
     print("Starting game...\n")
+    menu()
     create_map()
     while player.health:
         player_action_choice()
