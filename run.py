@@ -280,7 +280,7 @@ def fight():
             player.health -= skeleton.attack
             skeleton.health -= player.attack
         elif x == 5:
-            print("\nYou manage to do a critical hit!")
+            print("\nYou manage to deal a critical hit!")
             skeleton.health -= player.attack + 1
         else:
             print("\nYou hit the skeleton!")
