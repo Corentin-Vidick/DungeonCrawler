@@ -27,7 +27,7 @@ class Entity:
 
 player = Entity(0, 2, 1)
 skeleton = Entity(random.randint(3, 23), 2, 1)
-door = Entity(24, None, None)
+door = 24
 
 
 rooms = []
@@ -119,7 +119,7 @@ def create_map():
     # Place player
     rooms[player.pos].status = "player"
     # Place exit door - remove after testing
-    rooms[door.pos].status = "door"
+    rooms[door].status = "door"
     # Place skeleton - remove after testing
     rooms[skeleton.pos].status = "skel"
 
@@ -219,7 +219,6 @@ def move_player(direction):
     """
     # Needs some work on conditions for movement
     print("\n...Moving player...\n")
-    print(direction)
     if direction == "1" and player.pos > 4:
         rooms[player.pos].status = "empty"
         player.pos -= 5
@@ -246,7 +245,7 @@ def check_movement_result():
     Checks what the player has encountered after their move
     """
     print("...Checking where you are...")
-    if player.pos == door.pos:
+    if player.pos == door:
         victory()
     elif player.pos == skeleton.pos:
         encounter()
@@ -285,17 +284,17 @@ def fight():
     """
     print("\nYou fight the skeleton...\n")
     while player.health != 0 and skeleton.health != 0:
-        x = random.randint(1, 10)
-        if x == 1:
+        i = random.randint(1, 10)
+        if i == 1:
             print("\nBoth miss!")
-        elif x in (2, 3):
+        elif i in (2, 3):
             print("\nThe skeleton lands a blow!")
             player.health -= skeleton.attack
-        elif x == 4:
+        elif i == 4:
             print("\nYou both hit each other at the same time!")
             player.health -= skeleton.attack
             skeleton.health -= player.attack
-        elif x == 5:
+        elif i == 5:
             print("\nYou manage to deal a critical hit!")
             skeleton.health -= player.attack + 1
         else:
