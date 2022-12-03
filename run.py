@@ -87,8 +87,9 @@ direction to go, your life depends on your choices!")
     print("\n\n\nEnter any key to go back to menu")
     while True:
         i = input()
-        if i:
+        if i == "":
             break
+        print(f"{i} is wrong, please press Enter key...")
     menu()
 
 
@@ -98,11 +99,12 @@ def dev_credits():
     """
     clear_screen()
     print("\n\n\nThis game is developed by Corentin Vidick\n\n\n")
-    print("Enter any key to go back to menu")
+    print("Press Enter key to go back to menu")
     while True:
         i = input()
-        if i:
+        if i == "":
             break
+        print(f"{i} is wrong, please press Enter key...")
     menu()
 
 
@@ -129,8 +131,12 @@ def player_action_choice():
     Asks for input for player action
     Rest, see map or move
     """
-    choice = input("Would you like to rest ('1'), look at your map ('2')\
+    while True:
+        choice = input("Would you like to rest ('1'), look at your map ('2')\
  or move('3')?\n...")
+        if choice in ("1", "2", "3"):
+            break
+        print(f"{choice} is wrong, please try again...")
     if choice == "1":
         rest()
     elif choice == "2":
@@ -204,12 +210,12 @@ def player_movement_choice():
         print("go left ('3')")
     if move_right:
         print("go right ('4')")
-    direction = input("...")
-    if direction not in ("1", "2", "3", "4"):
-        print("\nWrong input, please try again\n")
-        player_movement_choice()
-    else:
-        move_player(direction)
+    while True:
+        direction = input("...")
+        if direction in ("1", "2", "3", "4"):
+            break
+        print(f"{direction} is wrong, please choose a valid option...")
+    move_player(direction)
 
 
 def move_player(direction):
@@ -236,7 +242,7 @@ def move_player(direction):
         player.pos += 1
         rooms[player.pos].status = "player"
     else:
-        print("Impossible move, please try again\n")
+        print(f"{direction} is wrong, please choose a valid option...")
         player_movement_choice()
 
 
@@ -267,15 +273,16 @@ def encounter():
     When player encounters a skeleton
     """
     clear_screen()
-    fight_or_flight = input("\nYou have encountered a skeleton! Would you \
+    while True:
+        fight_or_flight = input("\nYou have encountered a skeleton! Would you \
 like to fight ('1') or retreat ('2')?\n...")
+        if fight_or_flight in ("1", "2"):
+            break
+        print(f"{fight_or_flight} is wrong, please choose a valid option...")
     if fight_or_flight == "1":
         fight()
     elif fight_or_flight == "2":
         flight()
-    else:
-        print("\nWrong input, please try again\n")
-        encounter()
 
 
 def fight():
