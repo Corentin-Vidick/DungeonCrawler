@@ -80,11 +80,11 @@ def rules():
     Displays the rules to the player
     """
     clear_screen()
-    print("Hello adventurer, here is your challenge:\n\nYou will have to find \
-your way through the dungeon and escape through the door.\n\nCareful though\
-, skeletons are guarding the area.\n\nEach turn, you will choose a \
-direction to go, your life depends on your choices!")
-    print("\n\n\nEnter any key to go back to menu")
+    print("\n\n\nHello adventurer, here is your challenge:\n\nYou will have \
+to find your way through the dungeon and escape through the door.\n\nCareful \
+though, skeletons are guarding the area.\n\nEach turn, you will choose a \
+direction to go, your life depends on your choices!\n\n\n")
+    print("\n\n\nPress Enter key to go back to menu")
     while True:
         i = input()
         if i == "":
@@ -99,7 +99,7 @@ def dev_credits():
     """
     clear_screen()
     print("\n\n\nThis game is developed by Corentin Vidick\n\n\n")
-    print("Press Enter key to go back to menu")
+    print("\n\n\nPress Enter key to go back to menu")
     while True:
         i = input()
         if i == "":
@@ -348,13 +348,28 @@ def defeat():
     print("\n\nYou died!\n!!!Better luck next time!!!\n\n")
 
 
-if __name__ == "__main__":
+def run_game():
+    """
+    Game run function
+    """
     print("Starting game...\n")
     menu()
     create_map()
     while player.health:
         player_action_choice()
-    # map = []
-    player = Entity(0, 2, 1)
-    skeleton = Entity(random.randint(3, 23), 1, 1)
-    door = Entity(24, None, None)
+
+
+if __name__ == "__main__":
+    while True:
+        run_game()
+        while True:
+            i = input("\nYou have reached the end of the game! Would you \
+    like to restart ('1') or leave ('2')?\n...")
+            if i in ("1", "2"):
+                break
+            print(f"{i} is wrong, please choose a valid option...")
+        if i == "2":
+            break
+        rooms = []
+        player = Entity(0, 2, 1)
+        skeleton = Entity(random.randint(3, 23), 2, 1)
