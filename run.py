@@ -1,7 +1,8 @@
 """
-Import random function
+Import functions
 """
 import random
+import os
 
 # Global variables
 legend = {
@@ -45,10 +46,18 @@ class Room:
         self.pos = pos
 
 
+def clear_screen():
+    """
+    Clears terminal to improve UX
+    """
+    os.system("cls" if os.name == "nt" else "clear")
+
+
 def menu():
     """
     Displays the start of game menu: play, rules and credits
     """
+    clear_screen()
     print("Welcome to Coco's Dungeon Crawler\n\n")
     print("\n 1 - New game\n")
     print("\n 2 - Rules\n")
@@ -58,6 +67,7 @@ def menu():
         if i in ("1", "2", "3"):
             break
     if i == "1":
+        clear_screen()
         print("Let's go!\n\n\n")
     elif i == "2":
         rules()
@@ -69,6 +79,7 @@ def rules():
     """
     Displays the rules to the player
     """
+    clear_screen()
     print("Hello adventurer, here is your challenge:\n\nYou will have to find \
 your way through the dungeon and escape through the door.\n\nCareful though\
 , skeletons are guarding the area.\n\nEach turn, you will choose a \
@@ -85,6 +96,7 @@ def dev_credits():
     """
     Displays the credits to the player
     """
+    clear_screen()
     print("\n\n\nThis game is developed by Corentin Vidick\n\n\n")
     print("Enter any key to go back to menu")
     while True:
@@ -147,6 +159,7 @@ def show_map():
     """
     Shows the map to the player and how many lives they have left
     """
+    clear_screen()
     print("\nMap:\n")
     # one line the assignement and print?
     map_design = draw_map()
@@ -245,6 +258,7 @@ def no_event():
     """
     When player enters an empty room
     """
+    clear_screen()
     print("\nYou enter the room slowly, trying to look in every direction \
 at the same time...\nThe room is safe, but empty\n")
 
@@ -253,6 +267,7 @@ def encounter():
     """
     When player encounters a skeleton
     """
+    clear_screen()
     fight_or_flight = input("\nYou have encountered a skeleton! Would you \
 like to fight ('1') or retreat ('2')?\n...")
     if fight_or_flight == "1":
@@ -313,6 +328,7 @@ def victory():
     When player reaches the exit
     Resets player position and life
     """
+    clear_screen()
     print("\n\nYou made it out!\n!!!Congratulations!!!\n\n")
     player.health = 0
 
@@ -322,6 +338,7 @@ def defeat():
     When player runs out of lives
     Resets player position
     """
+    clear_screen()
     print("\n\nYou died!\n!!!Better luck next time!!!\n\n")
 
 
