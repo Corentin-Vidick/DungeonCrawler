@@ -16,6 +16,14 @@ legend = {
 }
 
 
+moves = {
+    "up": False,
+    "down": False,
+    "left": False,
+    "right": False
+}
+
+
 class Entity:
     """
     Creates an entity, player, enemy...
@@ -191,32 +199,50 @@ def draw_map():
     return map_string
 
 
+def check_possible_moves():
+    """
+    Checks which directions the player can move in
+    """
+    options = []
+    if player.pos in (0, 1, 2, 3, 4):
+        moves["up"] = False
+    else:
+        moves["up"] = True
+        options.append("1")
+    if player.pos in (20, 21, 22, 23, 24):
+        moves["down"] = False
+    else:
+        moves["down"] = True
+        options.append("2")
+    if player.pos in (0, 5, 10, 15, 20):
+        moves["left"] = False
+    else:
+        moves["left"] = True
+        options.append("3")
+    if player.pos in (4, 9, 14, 19, 24):
+        moves["right"] = False
+    else:
+        moves["right"] = True
+        options.append("4")
+    return options
+
+
 def player_movement_choice():
     """
     Asks for input to move player
     Only gives possible options
     """
     print("\n...Checking possible movements...\n")
-    options = []
-    for room in (rooms):
-        if room.status == "player":
-            move_up = False if room.pos in (0, 1, 2, 3, 4) else True
-            move_down = False if room.pos in (20, 21, 22, 23, 24) else True
-            move_left = False if room.pos in (0, 5, 10, 15, 20) else True
-            move_right = False if room.pos in (4, 9, 14, 19, 24) else True
-    print("Would you like to go:")
-    if move_up:
+    options = check_possible_moves()
+    print("Would you like to:")
+    if moves["up"]:
         print("go up ('1')")
-        options.append("1")
-    if move_down:
-        print("go down ('2')")
-        options.append("2")
-    if move_left:
+    if moves["down"]:
+        print("go down ('2')")       
+    if moves["left"]:
         print("go left ('3')")
-        options.append("3")
-    if move_right:
+    if moves["right"]:
         print("go right ('4')")
-        options.append("4")
     while True:
         direction = input("...")
         if direction in (options):
