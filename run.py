@@ -352,8 +352,8 @@ def flight():
         fight()
     elif escape == 2:
         print("\nYou run away blindly...\n")
-        i = str(random.randint(1, 4))
-        move_player(i)
+        i = check_possible_moves()
+        move_player(random.choice(i))
 
 
 def victory():
