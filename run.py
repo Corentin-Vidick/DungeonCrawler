@@ -10,7 +10,7 @@ legend = {
     "empty": ". ",
     "player": "P ",
     "wall": "# ",
-    "skel": "S ",
+    "skeleton": "S ",
     # remove door legend after testing
     "door": "E "
 }
@@ -27,7 +27,8 @@ class Entity:
 
 
 player = Entity(0, 2, 1)
-skeleton = Entity(random.randint(3, 23), 2, 1)
+# skeleton = Entity(random.randint(3, 23), 2, 1)
+skeleton = Entity(2, 2, 1)
 door = 24
 
 
@@ -124,7 +125,7 @@ def create_map():
     # Place exit door - remove after testing
     rooms[door].status = "door"
     # Place skeleton - remove after testing
-    rooms[skeleton.pos].status = "skel"
+    # rooms[skeleton.pos].status = "skeleton"
 
 
 def player_action_choice():
@@ -230,14 +231,17 @@ def move_player(direction):
     Otherwise returns to asking direction
     """
     print("\n...Moving player...\n")
-    rooms[player.pos].status = "empty"
+    if player.pos == skeleton.pos:
+        rooms[player.pos].status = "skeleton"
+    else:
+        rooms[player.pos].status = "empty"
     if direction == "1":
         player.pos -= 5
     elif direction == "2":
         player.pos += 5
     elif direction == "3":
         player.pos -= 1
-    elif direction == "4": 
+    elif direction == "4":
         player.pos += 1
     rooms[player.pos].status = "player"
 
@@ -274,7 +278,7 @@ def encounter():
 like to fight ('1') or retreat ('2')?\n...")
         if fight_or_flight in ("1", "2"):
             break
-        print(f"{fight_or_flight} is wrong, please choose a valid option...")
+        print(f"{fight_or_flight} is wrong, the skeleton is approaching...")
     if fight_or_flight == "1":
         fight()
     elif fight_or_flight == "2":
@@ -315,11 +319,12 @@ def flight():
     """
     Flee from a skeleton
     """
-    direction = random.randint(1, 2)
-    if direction == 1:
+    # escape = random.randint(1, 2)
+    escape = 2
+    if escape == 1:
         print("\nYou failed to escape, you have to fight")
         fight()
-    elif direction == 2:
+    elif escape == 2:
         print("\nYou run away blindly...\n")
         i = str(random.randint(1, 4))
         move_player(i)
