@@ -11,6 +11,7 @@ legend = {
     "player": "P ",
     "wall": "# ",
     "skel": "S ",
+    # remove door legend after testing
     "door": "E "
 }
 
@@ -195,6 +196,7 @@ def player_movement_choice():
     Only gives possible options
     """
     print("\n...Checking possible movements...\n")
+    options = []
     for room in (rooms):
         if room.status == "player":
             move_up = False if room.pos in (0, 1, 2, 3, 4) else True
@@ -204,15 +206,19 @@ def player_movement_choice():
     print("Would you like to go:")
     if move_up:
         print("go up ('1')")
+        options.append("1")
     if move_down:
         print("go down ('2')")
+        options.append("2")
     if move_left:
         print("go left ('3')")
+        options.append("3")
     if move_right:
         print("go right ('4')")
+        options.append("4")
     while True:
         direction = input("...")
-        if direction in ("1", "2", "3", "4"):
+        if direction in (options):
             break
         print(f"{direction} is wrong, please choose a valid option...")
     move_player(direction)
@@ -223,27 +229,17 @@ def move_player(direction):
     Moves player if possible
     Otherwise returns to asking direction
     """
-    # Needs some work on conditions for movement
     print("\n...Moving player...\n")
-    if direction == "1" and player.pos > 4:
-        rooms[player.pos].status = "empty"
+    rooms[player.pos].status = "empty"
+    if direction == "1":
         player.pos -= 5
-        rooms[player.pos].status = "player"
-    elif direction == "2" and player.pos < 20:
-        rooms[player.pos].status = "empty"
+    elif direction == "2":
         player.pos += 5
-        rooms[player.pos].status = "player"
-    elif direction == "3" and player.pos not in (0, 5, 10, 15, 20):
-        rooms[player.pos].status = "empty"
+    elif direction == "3":
         player.pos -= 1
-        rooms[player.pos].status = "player"
-    elif direction == "4" and player.pos not in (4, 9, 14, 19, 24):
-        rooms[player.pos].status = "empty"
+    elif direction == "4": 
         player.pos += 1
-        rooms[player.pos].status = "player"
-    else:
-        print(f"{direction} is wrong, please choose a valid option...")
-        player_movement_choice()
+    rooms[player.pos].status = "player"
 
 
 def check_movement_result():
@@ -364,7 +360,7 @@ if __name__ == "__main__":
         run_game()
         while True:
             i = input("\nYou have reached the end of the game! Would you \
-    like to restart ('1') or leave ('2')?\n...")
+like to restart ('1') or leave ('2')?\n...")
             if i in ("1", "2"):
                 break
             print(f"{i} is wrong, please choose a valid option...")
