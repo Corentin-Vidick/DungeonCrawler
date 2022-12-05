@@ -75,6 +75,7 @@ def menu():
         i = input("\n...\n")
         if i in ("1", "2", "3"):
             break
+        print(f"{i} is not an option, let's be nice and follow the guide\n")
     if i == "1":
         clear_screen()
         print("Let's go!\n\n\n")
@@ -91,8 +92,9 @@ def rules():
     clear_screen()
     print("\n\n\nHello adventurer, here is your challenge:\n\nYou will have \
 to find your way through the dungeon and escape through the door.\n\nCareful \
-though, skeletons are guarding the area.\n\nEach turn, you will choose a \
-direction to go, your life depends on your choices!\n\n\n")
+though, skeletons are guarding the area.\n\nYou can rest to gain health.\n\n\
+Each turn, you will choose a direction to go, your life depends on your \
+choices!\n\n\n")
     print("\n\n\nPress Enter key to go back to menu")
     while True:
         i = input("\n")
