@@ -35,8 +35,7 @@ class Entity:
 
 
 player = Entity(0, 2, 1)
-# skeleton = Entity(random.randint(3, 23), 2, 1)
-skeleton = Entity(2, 2, 1)
+skeleton = Entity(random.randint(3, 23), 2, 1)
 door = 24
 
 
@@ -73,7 +72,7 @@ def menu():
     print("\n 2 - Rules\n")
     print("\n 3 - Credits\n")
     while True:
-        i = input("\n...")
+        i = input("\n...\n")
         if i in ("1", "2", "3"):
             break
     if i == "1":
@@ -96,7 +95,7 @@ though, skeletons are guarding the area.\n\nEach turn, you will choose a \
 direction to go, your life depends on your choices!\n\n\n")
     print("\n\n\nPress Enter key to go back to menu")
     while True:
-        i = input()
+        i = input("\n")
         if i == "":
             break
         print(f"{i} is wrong, please press Enter key...")
@@ -111,7 +110,7 @@ def dev_credits():
     print("\n\n\nThis game is developed by Corentin Vidick\n\n\n")
     print("\n\n\nPress Enter key to go back to menu")
     while True:
-        i = input()
+        i = input("\n")
         if i == "":
             break
         print(f"{i} is wrong, please press Enter key...")
@@ -133,7 +132,7 @@ def create_map():
     # Place exit door - remove after testing
     rooms[door].status = "door"
     # Place skeleton - remove after testing
-    # rooms[skeleton.pos].status = "skeleton"
+    rooms[skeleton.pos].status = "skeleton"
 
 
 def player_action_choice():
@@ -143,7 +142,7 @@ def player_action_choice():
     """
     while True:
         choice = input("Would you like to rest ('1'), look at your map ('2')\
- or move('3')?\n...")
+ or move('3')?\n...\n")
         if choice in ("1", "2", "3"):
             break
         print(f"{choice} is wrong, please try again...")
@@ -244,7 +243,7 @@ def player_movement_choice():
     if moves["right"]:
         print("go right ('4')")
     while True:
-        direction = input("...")
+        direction = input("...\n")
         if direction in (options):
             break
         print(f"{direction} is wrong, please choose a valid option...")
@@ -301,7 +300,7 @@ def encounter():
     clear_screen()
     while True:
         fight_or_flight = input("\nYou have encountered a skeleton! Would you \
-like to fight ('1') or retreat ('2')?\n...")
+like to fight ('1') or retreat ('2')?\n...\n")
         if fight_or_flight in ("1", "2"):
             break
         print(f"{fight_or_flight} is wrong, the skeleton is approaching...")
@@ -371,7 +370,7 @@ def defeat():
     When player runs out of lives
     Resets player position
     """
-    clear_screen()
+    show_map()
     print("\n\nYou died!\n!!!Better luck next time!!!\n\n")
 
 
@@ -391,7 +390,7 @@ if __name__ == "__main__":
         run_game()
         while True:
             i = input("\nYou have reached the end of the game! Would you \
-like to restart ('1') or leave ('2')?\n...")
+like to restart ('1') or leave ('2')?\n...\n")
             if i in ("1", "2"):
                 break
             print(f"{i} is wrong, please choose a valid option...")
