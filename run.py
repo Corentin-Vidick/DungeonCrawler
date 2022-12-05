@@ -8,11 +8,11 @@ import os
 legend = {
     "dark": "  ",
     "empty": ". ",
-    "player": "P ",
-    "wall": "# ",
-    "skeleton": "S ",
+    "player": "🧍",
+    "wall": "🧱",
+    "skeleton": "💀",
     # remove door legend after testing
-    "door": "E "
+    "door": "🚪"
 }
 
 
@@ -183,7 +183,7 @@ def show_map():
     print(map_design)
     # end of one line?
     life = player.health
-    print(f"You have {life} health left\n")
+    print(f"\nYou have {life} health left\n")
 
 
 def draw_map():
@@ -192,11 +192,16 @@ def draw_map():
     """
     map_string = ""
     pos = 0
+    map_string += legend["wall"] * 7
+    map_string += "\n"
     for i in range(5):
+        map_string += legend["wall"]
         for j in range(5):
             map_string += (legend[rooms[pos].status])
             pos += 1
+        map_string += legend["wall"]
         map_string += "\n"
+    map_string += legend["wall"] * 7
     return map_string
 
 
