@@ -1,31 +1,108 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Coco's Dungeon Crawler
 
-Welcome Corentin-Vidick,
+    This is a dungeon crawler style text based game developped in Python. The aim of the game is for the player to navigate through the dungeon to find the exit. Along the way they might find enemy skeletons which they will have to fight or evade.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
 
-## Reminders
+## Features
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+    This game is a text based adventure. The player is asked to make a choice, wether which direction to go, if they want to rest (possibility to gain health) or if they want to fight a skeleton or try to evade it. The game then calculates and informs the player on the results of their decision
 
-## Creating the Heroku app
+### How the game works
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+- __I - Starting page__
 
-1. `heroku/python`
-2. `heroku/nodejs`
+    The starting page offers the player a menu style choice, letting them choose between starting the game, reading the rules and the credits.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+  ![Menu](/documentation/.jpg)
 
-Connect your GitHub repository and deploy as normal.
+  - __Rules__
+    
+    Here the rules of the game are explained to the player. The end game - finding the exit - is explained as well as the steps to achieve this and the challenges that can be found along the way.
 
-## Constraints
+  - __Credits__
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+    Informs the player about who developped the game.
 
------
-Happy coding!
+- __II - Decision time__
+
+    At the start of the game, the player is presented with three choices:
+     - Rest - one in ten chance of gaining 1 health, otherwise nothing happens
+     - Look at map - the player can look at the map. They will see their current position as well as all the rooms previously visited. If a room contained a skeleton and the player fled, the skeleton will be visible on the map
+     - Move - guides the player through the movement phase
+
+- __III - Movement time__
+
+    The player is presented with two to four directions they can go. Possible directions are calculated by the program and only valid options can be selected.
+
+- __IV - Movement result__
+
+    There are three possible outcomes to any move the player makes:
+     - The room is empty - player is presented with new decision time
+     - The room contains a skeleton - player is presented with a fight or flight option
+     - The room contains the exit - player wins
+
+- __V - Skeleton encounter__
+
+    The player is given a choice to fight or flee. Results are as follows:
+     - If the player decides to flee, they have a 50% chance of success, in which case they will move in a random possible direction, and be sent back to decision time. If the escape fails, they are forced to fight the skeleton
+     - If the player decides to fight, the program assigns random hits until either the player or the skeleton runs out of health. Hits are programmed as follows:
+        - 10% - both the player and skeleton hit
+        - 10% - player deals a critical hit (2x damage)
+        - 20% - the skeleton hits the player
+        - 60% - the player hits the skeleton
+
+- __VI - End of game__
+
+    The game ends in one of two ways:
+     - The player is defeated by a skeleton, they die.
+     - The player finds the exit, they win.
+    The player can then decide to play again or exit the program
+
+
+
+### Existing Features
+
+- __Map__
+
+    The map is created by generating 25 rooms. Each room is an object with:
+     - a position: allows to select particular rooms
+     - a status: dark (room hasn't been visited), empty (room visited), player, skeleton or door (exit)
+     - contents: currently not used but will be able to hold items such as a sword, shield or key
+    Only visited rooms are visible to the player when they open the map in-game. Walls are present to indicate the size of the map and show limits.
+
+- __Entities__
+
+    Entities are created as objects. This allows to give them a position, health level and attack strength.
+
+- __Movement__
+
+    The position of the player is checked at each turn, dependant on the room's position, it is determined which directions the player can move. Only possible directions are offered to the player and can be selected.
+
+- __Fight or flight__
+
+    Player is presented with the choice to flee or fight when they enter a room containing a skeleton. Success chances of an escape are 50%.
+
+- __Fight__
+
+    Results of a fight are randomly generated by assigning a random value and comparing it to our possible outcomes. Choice of percentages has been made to keep fights interesting with different possible outcomes.
+
+- __Flight__
+
+    When the escape is successful, player is moved in a random direction ot keep spirit of flight.
+
+- __Error handling__
+
+    When an input is asked for, the request will be repeated until a correct option is given. This is achieved through a "while True" loop.
+
+
+### Features Left to Implement
+
+
+
+
+- 
+
+- Intellectual property
+  - All images and text are property of the developer, Corentin Vidick
+  - GitPod repository can be found at [Battleship repository](https://github.com/Corentin-Vidick/Project2-Battleship) solely developed by Corentin Vidick from 06/11/2022 based on the [Initial repository](https://github.com/Corentin-Vidick/bataille-navale) solely developed by Corentin Vidick from 13/12/2022.
