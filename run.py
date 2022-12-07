@@ -8,11 +8,11 @@ import os
 legend = {
     "dark": "  ",
     "empty": ". ",
-    "player": "🧍",
-    "wall": "🧱",
-    "skeleton": "💀",
+    "player": "🧍 ",
+    "wall": "🧱 ",
+    "skeleton": "💀 ",
     # remove door legend after testing
-    "door": "🚪"
+    "door": "🚪 "
 }
 
 

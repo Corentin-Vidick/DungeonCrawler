@@ -99,7 +99,26 @@
 ### Features Left to Implement
 
 
+## Testing
 
+    A variety of testing has been done during the development process. The two main areas of focus at the start were:
+     - Player movement: the correct movement, positioning and verification of player's movement are paramount for this game to work.
+     - User inputs: efficient handling of inputs is crucial. As inputs are done through keyboard there are an infinity of options for the player. Ensuring only valid inputs are tackled by the program avoiding any script running in the background. Any wrong input is fed back to the user, so they understand what happened.
+
+### Menu:
+![Menu input](/documentation/input-menu.jpg)
+### Rules:
+![Rules input](/documentation/input-rules.jpg)
+### Credits:
+![Credits input](/documentation/input-credits.jpg)
+### Decision:
+![Decision input](/documentation/input-decision.jpg)
+### Direction:
+![Direction input](/documentation/input-direction.jpg)
+### Fight or flight:
+![Fight or flight input](/documentation/input-fight-or-flight.jpg)
+### End of game:
+![End of game input](/documentation/input-end-game.jpg)
 
 - 
 
