@@ -103,8 +103,24 @@
 
     A variety of testing has been done during the development process. The two main areas of focus at the start were:
      - Player movement: the correct movement, positioning and verification of player's movement are paramount for this game to work.
-     - User inputs: efficient handling of inputs is crucial. As inputs are done through keyboard there are an infinity of options for the player. Ensuring only valid inputs are tackled by the program avoiding any script running in the background. Any wrong input is fed back to the user, so they understand what happened.
+### From bottom-left corner:
+![Direction 1](/documentation/direction-bottomleft.jpg)
+### From middle of bottom row:
+![Direction 2](/documentation/direction-bottommiddle.jpg)
+### From middle of left column:
+![Direction 3](/documentation/direction-leftmiddle.jpg)
+### From middle of map:
+![Direction 4](/documentation/direction-middle.jpg)
+### From middle of right column:
+![Direction 5](/documentation/direction-rightmiddle.jpg)
+### From top-left corner:
+![Direction 6](/documentation/direction-topleft.jpg)
+### From middle of top row:
+![Direction 7](/documentation/direction-topmiddle.jpg)
+### From top-right corner:
+![Direction 8](/documentation/direction-topright.jpg)
 
+     - User inputs: efficient handling of inputs is crucial. As inputs are done through keyboard there are an infinity of options for the player. Ensuring only valid inputs are tackled by the program avoiding any script running in the background. Any wrong input is fed back to the user, so they understand what happened.
 ### Menu:
 ![Menu input](/documentation/input-menu.jpg)
 ### Rules:
