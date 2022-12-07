@@ -263,7 +263,7 @@ def move_player(direction):
     Otherwise returns to asking direction
     """
     print("\n...Moving player...\n")
-    if player.pos == skeleton.pos:
+    if player.pos == skeleton.pos and skeleton.health != 0:
         rooms[player.pos].status = "skeleton"
     else:
         rooms[player.pos].status = "empty"
@@ -342,6 +342,7 @@ def fight():
     if player.health == 0:
         defeat()
     elif skeleton.health == 0:
+        # del skeleton
         print("\nYou defeated the skeleton! A pile of bones now lays at your \
 feet\n")
         rooms[skeleton.pos].status = "player"
