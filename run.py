@@ -7,10 +7,11 @@ import os
 # Global variables
 legend = {
     "dark": "  ",
-    "empty": ". ",
+    "empty": "👣 ",
     "player": "🧍 ",
     "wall": "🧱 ",
     "skeleton": "💀 ",
+    "dead": "⚰️ ",
     # remove door legend after testing
     "door": "🚪 "
 }
@@ -35,7 +36,7 @@ class Entity:
 
 
 player = Entity(0, 2, 1)
-skeleton = Entity(random.randint(3, 23), 2, 1)
+skeleton = Entity(random.randint(3, 23), 20, 1)
 door = 24
 
 
@@ -378,6 +379,7 @@ def defeat():
     When player runs out of lives
     Resets player position
     """
+    rooms[player.pos].status = "dead"
     show_map()
     print("\n\nYou died!\n!!!Better luck next time!!!\n\n")
 
