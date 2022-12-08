@@ -245,7 +245,7 @@ def player_movement_choice():
     if moves["up"]:
         print("go up ('1')")
     if moves["down"]:
-        print("go down ('2')")       
+        print("go down ('2')")
     if moves["left"]:
         print("go left ('3')")
     if moves["right"]:

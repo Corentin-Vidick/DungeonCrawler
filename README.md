@@ -71,9 +71,34 @@
      - contents: currently not used but will be able to hold items such as a sword, shield or key
     Only visited rooms are visible to the player when they open the map in-game. Walls are present to indicate the size of the map and show limits.
 
+```Python
+class Room:
+    """
+    Creates an empty, dark room
+    status matches legend options
+    sontents to add future objects (sword, shield...)
+    pos
+    """
+    def __init__(self, status, contents, pos):
+        self.status = status
+        self.contents = contents
+        self.pos = pos
+```
+
 - __Entities__
 
     Entities are created as objects. This allows to give them a position, health level and attack strength.
+
+```Python
+class Entity:
+    """
+    Creates an entity, player, enemy...
+    """
+    def __init__(self, pos, health, attack):
+        self.pos = pos
+        self.health = health
+        self.attack = attack
+```
 
 - __Movement__
 
@@ -81,7 +106,7 @@
 
 - __Fight or flight__
 
-    Player is presented with the choice to flee or fight when they enter a room containing a skeleton. Success chances of an escape are 50%.
+    Player is presented with the choice to fight or run away when they enter a room containing a skeleton. Success chances of an escape are 50%.
 
 - __Fight__
 
@@ -95,11 +120,27 @@
 
     When an input is asked for, the request will be repeated until a correct option is given. This is achieved through a "while True" loop.
 
+```Python
+while True:
+        i = input("\n...\n")
+        if i in ("1", "2", "3"):
+            break
+        print(f"{i} is not an option, let's be nice and follow the guide\n")
+```
+
 
 ### Features Left to Implement
 
+-  Add skeleton movement. 
+-  Add different types of enemies.
+-  Add item system: sword, bow, shield...
+-  Increase map size and add randomly generated walls to increase challenge.
+-  Set up health potions instead of resting system.
+
 
 ## Testing
+
+### Troubleshooting
 
     A variety of testing has been done during the development process. The two main areas of focus at the start were:
      - Player movement: the correct movement, positioning and verification of player's movement are paramount for this game to work.
@@ -136,8 +177,47 @@
 ### End of game:
 ![End of game input](/documentation/input-end-game.jpg)
 
-- 
+### Tools and technologies used
+
+    A number of tools were used for this project:
+    - Programming - Python
+    - Software - Heroku, GitHub, GitPod, GitHub issues
+![GitHub issues](/documentation/github-issues1.jpg)
+![GitHub solved issues](/documentation/github-issues2.jpg)
+    - Validators - https://pep8ci.herokuapp.com/
+
+### Validation
+
+- Python:
+![Python validator](/documentation/python-validation.jpg)
+
+
+## Deployment
+
+The site was deployed to GitHub pages. The steps to deploy are as follows: 
+  - In the [GitHub repository](https://github.com/Corentin-Vidick/DungeonCrawler), navigate to the Settings tab 
+  - From the source section drop-down menu, select the **Main** Branch, then click "Save".
+  - The page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
+
+The live link can be found [here](https://corentin-vidick.github.io/DungeonCrawler)
+
+### Local Deployment
+
+In order to make a local copy of this project, you can clone it. In your IDE Terminal, type the following command to clone my repository:
+
+- `git clone https://github.com/Corentin-Vidick/DungeonCrawler.git`
+
+Alternatively, if using Gitpod, you can click below to create your own workspace using this repository.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Corentin-Vidick/DungeonCrawler)
+
+
+## Credits
+
+- All emoticons taken from https://emojipedia.org/
+- clear() function from https://stackoverflow.com/questions/2084508/clear-terminal-in-python
+- Object understanding through https://www.w3schools.com/python/python_classes.asp
 
 - Intellectual property
   - All images and text are property of the developer, Corentin Vidick
-  - GitPod repository can be found at [Battleship repository](https://github.com/Corentin-Vidick/Project2-Battleship) solely developed by Corentin Vidick from 06/11/2022 based on the [Initial repository](https://github.com/Corentin-Vidick/bataille-navale) solely developed by Corentin Vidick from 13/12/2022.
+  - GitPod repository can be found at [Dungeon Crawler repository](https://github.com/Corentin-Vidick/DungeonCrawler) solely developed by Corentin Vidick from 21/11/2022.
