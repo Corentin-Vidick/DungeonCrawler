@@ -12,7 +12,7 @@ legend = {
     "wall": "🧱 ",
     "skeleton": "💀 ",
     "dead": "⚰️ ",
-    # remove door legend after testing
+    # TODO: remove door legend after testing
     "door": "🚪 "
 }
 
@@ -91,11 +91,14 @@ def rules():
     Displays the rules to the player
     """
     clear_screen()
-    print("\n\n\nHello adventurer, here is your challenge:\n\nYou will have \
-to find your way through the dungeon and escape through the door.\n\nCareful \
-though, skeletons are guarding the area.\n\nYou can rest to gain health.\n\n\
-Each turn, you will choose a direction to go, your life depends on your \
-choices!\n\n\n")
+    print(
+        "\n\n\nHello adventurer, here is your challenge:\n\n"
+        "You will have to find your way through the dungeon and escape "
+        "through the door.\n\nCareful though, skeletons are guarding the "
+        "area.\n\nYou can rest to gain health.\n\n"
+        "Each turn, you will choose a direction to go, "
+        "your life depends on your choices!\n\n\n"
+    )
     print("\n\n\nPress Enter key to go back to menu")
     while True:
         i = input("\n")
@@ -144,8 +147,11 @@ def player_action_choice():
     Rest, see map or move
     """
     while True:
-        choice = input("Would you like to rest ('1'), look at your map ('2')\
- or move('3')?\n...\n")
+        choice = input(
+            "Would you like to rest ('1'), "
+            "look at your map ('2') "
+            "or move('3')?\n...\n"
+        )
         if choice in ("1", "2", "3"):
             break
         print(f"{choice} is wrong, please try again...")
