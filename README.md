@@ -278,6 +278,7 @@ The frontend terminal should now be connected and deployed to Heroku.
 - All emoticons taken from https://emojipedia.org/
 - clear() function from https://stackoverflow.com/questions/2084508/clear-terminal-in-python
 - Object understanding through https://www.w3schools.com/python/python_classes.asp
+- Use of colorama from https://www.youtube.com/watch?v=u51Zjlnui4Y&ab_channel=TechWithTim
 
 - Intellectual property
   - All images and text are property of the developer, Corentin Vidick
