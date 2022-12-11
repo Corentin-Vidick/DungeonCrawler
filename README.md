@@ -31,6 +31,8 @@ At the start of the game, the player is presented with three choices:
 ![Rest fail](documentation/rest-fail.jpg)
 ![Rest success](documentation/rest-success.jpg)
 - Look at map - the player can look at the map. They will see their current position as well as all the rooms previously visited. If a room contained a skeleton and the player fled, the skeleton will be visible on the map
+![Map](documentation/map.jpg)
+![Map skeleton found](documentation/map-skeleton-found.jpg)
 - Move - guides the player through the movement phase
 ![Movement time](documentation/movement-time.jpg)
 
