@@ -37,7 +37,9 @@ class Entity:
 
 player = Entity(0, 2, 1)
 skeleton = Entity(random.randint(3, 23), 20, 1)
-door = 24
+door = random.randint(3, 23)
+while skeleton.pos == door:
+    door = random.randint(3, 23)
 
 
 rooms = []
@@ -113,7 +115,12 @@ def dev_credits():
     Displays the credits to the player
     """
     clear_screen()
-    print("\n\n\nThis game is developed by Corentin Vidick\n\n\n")
+    print(
+        "\n\n\nThis game is developed by Corentin Vidick\n\n\n"
+        "For the best experience play on Google Chrome browser. "
+        "Playing on another browser might cause issues "
+        "with the display of emoticons."
+    )
     print("\n\n\nPress Enter key to go back to menu")
     while True:
         i = input("\n")
@@ -135,9 +142,9 @@ def create_map():
         rooms.append(room)
     # Place player
     rooms[player.pos].status = "player"
-    # Place exit door - remove after testing
+    # TODO: Place exit door - remove after testing
     rooms[door].status = "door"
-    # Place skeleton - remove after testing
+    # TODO: Place skeleton - remove after testing
     rooms[skeleton.pos].status = "skeleton"
 
 
@@ -185,10 +192,7 @@ def show_map():
     """
     clear_screen()
     print("\nMap:\n")
-    # one line the assignement and print?
-    map_design = draw_map()
-    print(map_design)
-    # end of one line?
+    print(draw_map())
     life = player.health
     print(f"\nYou have {life} health left\n")
 
@@ -303,8 +307,10 @@ def no_event():
     When player enters an empty room
     """
     clear_screen()
-    print("\nYou enter the room slowly, trying to look in every direction \
-at the same time...\nThe room is safe, but empty\n")
+    print(
+        "\nYou enter the room slowly, trying to look in every direction "
+        "at the same time...\nThe room is safe, but empty\n"
+    )
 
 
 def encounter():
@@ -313,8 +319,10 @@ def encounter():
     """
     clear_screen()
     while True:
-        fight_or_flight = input("\nYou have encountered a skeleton! Would you \
-like to fight ('1') or retreat ('2')?\n...\n")
+        fight_or_flight = input(
+            "\nYou have encountered a skeleton! Would you "
+            "like to fight ('1') or retreat ('2')?\n...\n"
+        )
         if fight_or_flight in ("1", "2"):
             break
         print(f"{fight_or_flight} is wrong, the skeleton is approaching...")
@@ -350,8 +358,10 @@ def fight():
         defeat()
     elif skeleton.health == 0:
         # del skeleton
-        print("\nYou defeated the skeleton! A pile of bones now lays at your \
-feet\n")
+        print(
+            "\nYou defeated the skeleton! A pile of bones now lays at your "
+            "feet\n"
+        )
         rooms[skeleton.pos].status = "player"
 
 
@@ -405,13 +415,21 @@ if __name__ == "__main__":
     while True:
         run_game()
         while True:
-            i = input("\nYou have reached the end of the game! Would you \
-like to restart ('1') or leave ('2')?\n...\n")
+            i = input(
+                "\nYou have reached the end of the game! Would you "
+                "like to restart ('1') or leave ('2')?\n...\n"
+            )
             if i in ("1", "2"):
                 break
             print(f"{i} is wrong, please choose a valid option...")
         if i == "2":
             break
+        # Reset all entities for next game
         rooms = []
-        player = Entity(0, 2, 1)
-        skeleton = Entity(random.randint(3, 23), 2, 1)
+        player.pos = 0
+        player.health = 2
+        skeleton.pos = random.randint(1, 23)
+        skeleton.health = 2
+        door = random.randint(3, 23)
+        while skeleton.pos == door:
+            door = random.randint(3, 23)
