@@ -1,2 +1,2 @@
-pip install colorama
+coloroma==0.4.4
 pip freeze
