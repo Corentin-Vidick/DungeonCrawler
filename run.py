@@ -36,7 +36,7 @@ class Entity:
 
 
 player = Entity(0, 2, 1)
-skeleton = Entity(random.randint(3, 23), 20, 1)
+skeleton = Entity(random.randint(3, 23), 2, 1)
 door = random.randint(3, 23)
 while skeleton.pos == door:
     door = random.randint(3, 23)
@@ -369,8 +369,7 @@ def flight():
     """
     Flee from a skeleton
     """
-    # escape = random.randint(1, 2)
-    escape = 2
+    escape = random.randint(1, 2)
     if escape == 1:
         print("\nYou failed to escape, you have to fight")
         fight()
