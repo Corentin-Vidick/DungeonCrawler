@@ -13,7 +13,7 @@ legend = {
     "skeleton": "💀 ",
     "dead": "⚰️ ",
     # TODO: remove door legend after testing
-    "door": "🚪 "
+    # "door": "🚪 "
 }
 
 
@@ -143,9 +143,9 @@ def create_map():
     # Place player
     rooms[player.pos].status = "player"
     # TODO: Place exit door - remove after testing
-    rooms[door].status = "door"
+    # rooms[door].status = "door"
     # TODO: Place skeleton - remove after testing
-    rooms[skeleton.pos].status = "skeleton"
+    # rooms[skeleton.pos].status = "skeleton"
 
 
 def player_action_choice():
@@ -357,7 +357,6 @@ def fight():
     if player.health == 0:
         defeat()
     elif skeleton.health == 0:
-        # del skeleton
         print(
             "\nYou defeated the skeleton! A pile of bones now lays at your "
             "feet\n"

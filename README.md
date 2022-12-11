@@ -54,6 +54,7 @@ There are three possible outcomes to any move the player makes:
 The player is given a choice to fight or flee. Results are as follows:
 - If the player decides to flee, they have a 50% chance of success, in which case they will move in a random possible direction, and be sent back to decision time. If the escape fails, they are forced to fight the skeleton
 ![Flight success](documentation/flight-success.jpg)
+![Flight fail](documentation/flight-fail.jpg)
 - If the player decides to fight, the program assigns random hits until either the player or the skeleton runs out of health. Hits are programmed as follows:
         - 10% - both the player and skeleton hit
         - 10% - player deals a critical hit (2x damage)
@@ -195,6 +196,7 @@ A variety of testing has been done during the development process. The two main 
 ![Ctrl + C](documentation/control-c.jpg)
 - On Mozilla Firefox browser, emojis are cut in half
 ![Mozilla Firefox](documentation/firefox.jpg)
+- If the player fails to flee and loses against the skeleton, screen jumps straight to defeat screen. Difficult to follow what happened for player.
 
 ### Tools and technologies used
 
