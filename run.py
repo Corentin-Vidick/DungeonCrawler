@@ -25,7 +25,8 @@ legend = {
     "player": "🧍 ",
     "wall": "🧱 ",
     "skeleton": "💀 ",
-    "dead": "⚰️ "
+    "dead": "⚰️ ",
+    "door": "E  "
 }
 
 
@@ -50,11 +51,27 @@ class Entity:
         self.attack = attack
 
 
-player = Entity(0, 2, 1)
-skeleton = Entity(random.randint(3, 23), 2, 1)
-door = random.randint(3, 23)
-while skeleton.pos == door:
+level = 1
+skeletons = []
+skeleton_rooms = []
+
+
+def set_entities():
+    i = 1
+    global player
+    player = Entity(0, 2, 1)
+    while i <= level:
+        skel_pos = random.randint(3, 23)
+        if i > 0:
+            while skel_pos in skeleton_rooms:
+                skel_pos = random.randint(3, 23)
+        skeletons.append(Entity(skel_pos, 2, 1))
+        skeleton_rooms.append(skel_pos)
+        i += 1
+    global door
     door = random.randint(3, 23)
+    while door in skeleton_rooms:
+        door = random.randint(3, 23)
 
 
 rooms = []
@@ -86,8 +103,8 @@ def menu():
     Displays the start of game menu: play, rules and credits
     """
     clear_screen()
-    print(f"{Fore.BLUE}Welcome to Coco's Dungeon Crawler\n\n")
-    print(f"\n {Back.MAGENTA}1{Back.RESET} - New game\n")
+    print(f"{Fore.BLUE}Welcome to Coco's Dungeon Crawler - Level {level}\n\n")
+    print(f"\n {Back.MAGENTA}1{Back.RESET} - Play level {level}\n")
     print(f"\n {Back.MAGENTA}2{Back.RESET} - Rules\n")
     print(f"\n {Back.MAGENTA}3{Back.RESET} - Credits\n")
     while True:
@@ -165,6 +182,9 @@ def create_map():
         rooms.append(room)
     # Assign player to room
     rooms[player.pos].status = "player"
+    for i in range(len(skeletons)):
+        rooms[skeleton_rooms[i]].status = "skeleton"
+    rooms[door].status = "door"
 
 
 def player_action_choice():
@@ -188,7 +208,6 @@ def player_action_choice():
         show_map()
     elif choice == "3":
         player_movement_choice()
-        check_movement_result()
 
 
 def rest():
@@ -301,9 +320,15 @@ def move_player(direction):
     Otherwise returns to asking direction
     """
     print(f"{Fore.CYAN}\n...Moving player...\n")
-    if player.pos == skeleton.pos and skeleton.health != 0:
-        rooms[player.pos].status = "skeleton"
-    else:
+    i = 0
+    while i < len(skeletons):
+        if player.pos == skeleton_rooms[i] and skeletons[i].health != 0:
+            rooms[player.pos].status = "skeleton"
+            break
+        else:
+            rooms[player.pos].status = "empty"
+        i += 1
+    if len(skeletons) == 0:
         rooms[player.pos].status = "empty"
     if direction == "1":
         player.pos -= 5
@@ -314,6 +339,7 @@ def move_player(direction):
     elif direction == "4":
         player.pos += 1
     rooms[player.pos].status = "player"
+    check_movement_result()
 
 
 def check_movement_result():
@@ -323,7 +349,7 @@ def check_movement_result():
     print(f"{Fore.CYAN}...Checking where you are...")
     if player.pos == door:
         victory()
-    elif player.pos == skeleton.pos:
+    elif player.pos in skeleton_rooms:
         encounter()
     else:
         no_event()
@@ -368,31 +394,39 @@ def fight():
     Fight against a skeleton
     """
     print("\nYou fight the skeleton...\n")
-    while player.health != 0 and skeleton.health != 0:
+    j = 0
+    while j < len(skeleton_rooms):
+        if player.pos == skeletons[j].pos:
+            break
+        else:
+            j += 1
+    while player.health != 0 and skeletons[j].health != 0:
         i = random.randint(1, 10)
         if i == 1:
             print("\nBoth miss!")
         elif i in (2, 3):
             print(f"{Fore.RED}\nThe skeleton lands a blow!")
-            player.health -= skeleton.attack
+            player.health -= skeletons[j].attack
         elif i == 4:
             print("\nYou both hit each other at the same time!")
-            player.health -= skeleton.attack
-            skeleton.health -= player.attack
+            player.health -= skeletons[j].attack
+            skeletons[j].health -= player.attack
         elif i == 5:
             print(f"{Fore.CYAN}\nYou manage to deal a critical hit!")
-            skeleton.health -= player.attack + 1
+            skeletons[j].health -= player.attack + 1
         else:
             print(f"{Fore.CYAN}\nYou hit the skeleton!")
-            skeleton.health -= player.attack
+            skeletons[j].health -= player.attack
     if player.health == 0:
         defeat()
-    elif skeleton.health == 0:
+    elif skeletons[j].health == 0:
         print(
             f"{Fore.GREEN}\nYou defeated the skeleton! A pile of bones now "
             "lays at your feet\n"
         )
-        rooms[skeleton.pos].status = "player"
+        rooms[skeletons[j].pos].status = "player"
+        del skeletons[j]
+        del skeleton_rooms[j]
 
 
 def flight():
@@ -417,6 +451,9 @@ def victory():
     clear_screen()
     print(f"{Fore.GREEN}\n\nYou made it out!\n!!!Congratulations!!!\n\n")
     player.health = 0
+    global level, success
+    level += 1
+    success = 1
 
 
 def defeat():
@@ -427,6 +464,9 @@ def defeat():
     rooms[player.pos].status = "dead"
     show_map()
     print(f"{Fore.RED}\n\nYou died!\n!!!Better luck next time!!!\n\n")
+    global level, success
+    level = 1
+    success = 0
 
 
 def run_game():
@@ -442,25 +482,33 @@ def run_game():
 
 if __name__ == "__main__":
     while True:
+        set_entities()
         run_game()
-        while True:
-            i = input(
-                "\nYou have reached the end of the game! Would "
-                f"you like to restart {Back.MAGENTA}1"
-                f"{Back.RESET} or leave {Back.MAGENTA}2"
-                f"{Back.RESET}?\n...\n"
-            )
-            if i in ("1", "2"):
-                break
-            print(f"{i} is wrong, please choose a valid option...")
+        if success == 1:
+            while True:
+                i = input(
+                    "\nYou have won the level! Would "
+                    f"you like to continue {Back.MAGENTA}1"
+                    f"{Back.RESET} or leave {Back.MAGENTA}2"
+                    f"{Back.RESET}?\n...\n"
+                )
+                if i in ("1", "2"):
+                    break
+                print(f"{i} is wrong, please choose a valid option...")
+        else:
+            while True:
+                i = input(
+                    "\nYou have lost the level! Would "
+                    f"you like to restart {Back.MAGENTA}1"
+                    f"{Back.RESET} or leave {Back.MAGENTA}2"
+                    f"{Back.RESET}?\n...\n"
+                )
+                if i in ("1", "2"):
+                    break
+                print(f"{i} is wrong, please choose a valid option...")
         if i == "2":
             break
         # Reset all entities for next game
         rooms = []
-        player.pos = 0
-        player.health = 2
-        skeleton.pos = random.randint(1, 23)
-        skeleton.health = 2
-        door = random.randint(3, 23)
-        while skeleton.pos == door:
-            door = random.randint(3, 23)
+        skeletons = []
+        skeleton_rooms = []
