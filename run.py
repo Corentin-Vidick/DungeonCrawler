@@ -1,15 +1,21 @@
 """
-Import functions
+The following lines of code have been taken from:
+https://www.youtube.com/watch?v=u51Zjlnui4Y&ab_channel=TechWithTim
 """
+# - START -
+import colorama
+from colorama import Fore, Back
+# - END -
+
 import random
 import os
 
-# Lines of code from
-# https://www.youtube.com/watch?v=u51Zjlnui4Y&ab_channel=TechWithTim
+"""
+The following line of code has been taken from:
+https://www.youtube.com/watch?v=u51Zjlnui4Y&ab_channel=TechWithTim
+"""
 # - START -
-import colorama
-from colorama import Fore, Back, init
-init(autoreset=True)
+colorama.init(autoreset=True)
 # - END -
 
 # Global variables
@@ -19,12 +25,13 @@ legend = {
     "player": "🧍 ",
     "wall": "🧱 ",
     "skeleton": "💀 ",
-    "dead": "⚰️ ",
-    # TODO: remove door legend after testing
-    # "door": "🚪 "
+    "dead": "⚰️ "
 }
 
 
+"""
+Used to check possible movement directions
+"""
 moves = {
     "up": False,
     "down": False,
@@ -57,8 +64,8 @@ class Room:
     """
     Creates an empty, dark room
     status matches legend options
-    sontents to add future objects (sword, shield...)
-    pos
+    contents to add future objects (sword, shield...)
+    pos to mark room position in grid
     """
     def __init__(self, status, contents, pos):
         self.status = status
@@ -70,6 +77,7 @@ def clear_screen():
     """
     Clears terminal to improve UX
     """
+    print("")   # Allows Colorama to reset colors to default
     os.system("cls" if os.name == "nt" else "clear")
 
 
@@ -90,8 +98,6 @@ def menu():
             f"{Fore.GREEN}{i} is not an option, "
             "let's be nice and follow the guide\n")
     if i == "1":
-        # Allows Colorama to reset colors to default
-        print("")
         clear_screen()
         print(f"{Fore.BLUE}Let's go!\n\n\n")
     elif i == "2":
@@ -104,8 +110,6 @@ def rules():
     """
     Displays the rules to the player
     """
-    # Allows Colorama to reset colors to default
-    print("")
     clear_screen()
     print(
         "\n\n\nHello adventurer, here is your challenge:\n\n"
@@ -133,8 +137,6 @@ def dev_credits():
     """
     Displays the credits to the player
     """
-    # Allows Colorama to reset colors to default
-    print("")
     clear_screen()
     print(
         "\n\n\nThis game is developed by Corentin Vidick\n\n\n"
@@ -161,12 +163,8 @@ def create_map():
     for i in range(25):
         room = Room("dark", "nothing", i)
         rooms.append(room)
-    # Place player
+    # Assign player to room
     rooms[player.pos].status = "player"
-    # TODO: Place exit door - remove after testing
-    # rooms[door].status = "door"
-    # TODO: Place skeleton - remove after testing
-    # rooms[skeleton.pos].status = "skeleton"
 
 
 def player_action_choice():
@@ -191,9 +189,6 @@ def player_action_choice():
     elif choice == "3":
         player_movement_choice()
         check_movement_result()
-    # else:
-    #    print("Wrong input, please try again\n")
-    #    player_action_choice()
 
 
 def rest():
@@ -203,9 +198,15 @@ def rest():
     chance = random.randint(1, 10)
     if chance == 1:
         player.health += 1
-        print("Your rest was fruitful, you have gained a life!")
+        print(
+            "Your rest was fruitful, you have gained a "
+            f"{Fore.GREEN}life{Fore.RESET}!"
+        )
     else:
-        print("You had nightmares and woke up the same as before...")
+        print(
+            f"You had {Fore.RED}nightmares{Fore.RESET} "
+            "and woke up the same as before..."
+        )
 
 
 def show_map():
@@ -218,8 +219,8 @@ def show_map():
     life = player.health
     print(
         f"\nYou have "
-        f"{Fore.GREEN}{life} health "
-        f"{Fore.WHITE}left\n"
+        f"{Fore.GREEN}{life} health"
+        f"{Fore.WHITE} left\n"
     )
 
 
@@ -352,7 +353,10 @@ def encounter():
         )
         if fight_or_flight in ("1", "2"):
             break
-        print(f"{fight_or_flight} is wrong, the skeleton is approaching...")
+        print(
+            f"{fight_or_flight} is wrong, the {Fore.RED}skeleton{Fore.RESET} "
+            "is approaching..."
+        )
     if fight_or_flight == "1":
         fight()
     elif fight_or_flight == "2":
@@ -400,7 +404,7 @@ def flight():
         print(f"{Fore.RED}\nYou failed to escape, you have to fight")
         fight()
     elif escape == 2:
-        print(f"{Fore.BLUE}\nYou run away blindly...\n")
+        print(f"{Fore.GREEN}\nYou run away blindly...\n")
         i = check_possible_moves()
         move_player(random.choice(i))
 
