@@ -25,8 +25,9 @@ legend = {
     "player": "🧍 ",
     "wall": "🧱 ",
     "skeleton": "💀 ",
-    "dead": "⚰️ ",
-    "door": "E  "
+    "dead": "⚰️ "
+    # Use for debugging
+    # "door": "E  "
 }
 
 
@@ -182,9 +183,10 @@ def create_map():
         rooms.append(room)
     # Assign player to room
     rooms[player.pos].status = "player"
-    for i in range(len(skeletons)):
-        rooms[skeleton_rooms[i]].status = "skeleton"
-    rooms[door].status = "door"
+    # Use for debugging
+    # for i in range(len(skeletons)):
+    #    rooms[skeleton_rooms[i]].status = "skeleton"
+    # rooms[door].status = "door"
 
 
 def player_action_choice():
@@ -484,6 +486,11 @@ if __name__ == "__main__":
     while True:
         set_entities()
         run_game()
+        if level >= 20:
+            print(
+                "You have reached the end of the game in its current status"
+                "Congratulations on your victory!"
+            )
         if success == 1:
             while True:
                 i = input(
