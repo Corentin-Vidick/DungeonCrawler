@@ -8,8 +8,8 @@ import os
 # https://www.youtube.com/watch?v=u51Zjlnui4Y&ab_channel=TechWithTim
 # - START -
 import colorama
-from colorama import Fore, Back
-colorama.init(autoreset=True)
+from colorama import Fore, Back, init
+init(autoreset=True)
 # - END -
 
 # Global variables
@@ -79,17 +79,19 @@ def menu():
     """
     clear_screen()
     print(f"{Fore.BLUE}Welcome to Coco's Dungeon Crawler\n\n")
-    print("\n 1 - New game\n")
-    print("\n 2 - Rules\n")
-    print("\n 3 - Credits\n")
+    print(f"\n {Back.MAGENTA}1{Back.RESET} - New game\n")
+    print(f"\n {Back.MAGENTA}2{Back.RESET} - Rules\n")
+    print(f"\n {Back.MAGENTA}3{Back.RESET} - Credits\n")
     while True:
-        i = input(f"{Fore.MAGENTA}\n...\n")
+        i = input("\n...\n")
         if i in ("1", "2", "3"):
             break
         print(
             f"{Fore.GREEN}{i} is not an option, "
             "let's be nice and follow the guide\n")
     if i == "1":
+        # Allows Colorama to reset colors to default
+        print("")
         clear_screen()
         print(f"{Fore.BLUE}Let's go!\n\n\n")
     elif i == "2":
@@ -102,9 +104,11 @@ def rules():
     """
     Displays the rules to the player
     """
+    # Allows Colorama to reset colors to default
+    print("")
     clear_screen()
     print(
-        f"{Fore.WHITE}\n\n\nHello adventurer, here is your challenge:\n\n"
+        "\n\n\nHello adventurer, here is your challenge:\n\n"
         "You will have to make your way through the dungeon and "
         "find the secret "
         f"{Fore.YELLOW}exit"
@@ -116,7 +120,7 @@ def rules():
         f"{Fore.WHITE}Each turn, you will choose a direction to go, "
         "your life depends on your choices!\n\n\n"
     )
-    print(f"{Fore.MAGENTA}\n\n\nPress Enter key to go back to menu")
+    print(f"{Back.MAGENTA}\n\n\nPress Enter key to go back to menu")
     while True:
         i = input("\n")
         if i == "":
@@ -129,14 +133,16 @@ def dev_credits():
     """
     Displays the credits to the player
     """
+    # Allows Colorama to reset colors to default
+    print("")
     clear_screen()
     print(
-        f"{Fore.WHITE}\n\n\nThis game is developed by Corentin Vidick\n\n\n"
+        "\n\n\nThis game is developed by Corentin Vidick\n\n\n"
         "For the best experience play on Google Chrome browser. "
         "Playing on another browser might cause issues "
         "with the display of emoticons."
     )
-    print(f"{Fore.MAGENTA}\n\n\nPress Enter key to go back to menu")
+    print(f"{Back.MAGENTA}\n\n\nPress Enter key to go back to menu")
     while True:
         i = input("\n")
         if i == "":
@@ -170,10 +176,10 @@ def player_action_choice():
     """
     while True:
         choice = input(
-            f"{Fore.WHITE}Would you like to rest {Fore.MAGENTA}1"
-            f"{Fore.WHITE}, look at your map {Fore.MAGENTA}2 "
-            f"{Fore.WHITE}or move {Fore.MAGENTA}3"
-            f"{Fore.WHITE}?\n...\n"
+            f"Would you like to rest {Back.MAGENTA}1"
+            f"{Back.RESET}, look at your map {Back.MAGENTA}2"
+            f"{Back.RESET} or move {Back.MAGENTA}3"
+            f"{Back.RESET}?\n...\n"
         )
         if choice in ("1", "2", "3"):
             break
@@ -197,12 +203,9 @@ def rest():
     chance = random.randint(1, 10)
     if chance == 1:
         player.health += 1
-        print(f"{Fore.WHITE}Your rest was fruitful, you have gained a life!")
+        print("Your rest was fruitful, you have gained a life!")
     else:
-        print(
-            f"{Fore.WHITE}You had nightmares and woke up "
-            "the same as before..."
-        )
+        print("You had nightmares and woke up the same as before...")
 
 
 def show_map():
@@ -272,19 +275,19 @@ def player_movement_choice():
     Asks for input to move player
     Only gives possible options
     """
-    print(f"{Fore.WHITE}\n...Checking possible movements...\n")
+    print(f"{Fore.CYAN}\n...Checking possible movements...\n")
     options = check_possible_moves()
-    print(f"{Fore.WHITE}Would you like to:")
+    print("Would you like to:")
     if moves["up"]:
-        print(f"go up {Fore.MAGENTA}1")
+        print(f"go up {Back.MAGENTA}1")
     if moves["down"]:
-        print(f"go down {Fore.MAGENTA}2")
+        print(f"go down {Back.MAGENTA}2")
     if moves["left"]:
-        print(f"go left {Fore.MAGENTA}3")
+        print(f"go left {Back.MAGENTA}3")
     if moves["right"]:
-        print(f"go right {Fore.MAGENTA}4")
+        print(f"go right {Back.MAGENTA}4")
     while True:
-        direction = input(f"{Fore.WHITE}...\n")
+        direction = input("...\n")
         if direction in (options):
             break
         print(f"{direction} is wrong, please choose a valid option...")
@@ -296,7 +299,7 @@ def move_player(direction):
     Moves player if possible
     Otherwise returns to asking direction
     """
-    print(f"{Fore.WHITE}\n...Moving player...\n")
+    print(f"{Fore.CYAN}\n...Moving player...\n")
     if player.pos == skeleton.pos and skeleton.health != 0:
         rooms[player.pos].status = "skeleton"
     else:
@@ -316,7 +319,7 @@ def check_movement_result():
     """
     Checks what the player has encountered after their move
     """
-    print(f"{Fore.WHITE}...Checking where you are...")
+    print(f"{Fore.CYAN}...Checking where you are...")
     if player.pos == door:
         victory()
     elif player.pos == skeleton.pos:
@@ -343,9 +346,9 @@ def encounter():
     clear_screen()
     while True:
         fight_or_flight = input(
-            f"{Fore.WHITE}\nYou have encountered a {Fore.RED}skeleton"
-            f"{Fore.WHITE}! Would you like to fight {Fore.MAGENTA}1 "
-            f"{Fore.WHITE}or retreat {Fore.MAGENTA}2{Fore.WHITE}?\n...\n"
+            f"\nYou have encountered a {Fore.RED}skeleton"
+            f"{Fore.WHITE}! Would you like to fight {Back.MAGENTA}1"
+            f"{Back.RESET} or retreat {Back.MAGENTA}2{Back.RESET}?\n...\n"
         )
         if fight_or_flight in ("1", "2"):
             break
@@ -426,7 +429,7 @@ def run_game():
     """
     Game run function
     """
-    print(f"{Fore.WHITE}Starting game...\n")
+    print(f"{Fore.CYAN}Starting game...\n")
     menu()
     create_map()
     while player.health:
@@ -438,10 +441,10 @@ if __name__ == "__main__":
         run_game()
         while True:
             i = input(
-                f"{Fore.WHITE}\nYou have reached the end of the game! Would "
-                f"you like to restart {Fore.MAGENTA}1 "
-                f"{Fore.WHITE}or leave {Fore.MAGENTA}2?\n"
-                f"{Fore.WHITE}...\n"
+                "\nYou have reached the end of the game! Would "
+                f"you like to restart {Back.MAGENTA}1"
+                f"{Back.RESET} or leave {Back.MAGENTA}2"
+                f"{Back.RESET}?\n...\n"
             )
             if i in ("1", "2"):
                 break
