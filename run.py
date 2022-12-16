@@ -26,7 +26,7 @@ legend = {
     "wall": "🧱 ",
     "skeleton": "💀 ",
     "dead": "⚰️ ",
-    "door": "E  "
+    "door": "E "
 }
 
 
@@ -488,7 +488,7 @@ if __name__ == "__main__":
                 i = input(
                     "Congratulations! You have beat the game in its current "
                     f"state of development.\nPress {Back.MAGENTA}Enter"
-                    f"{Back.RESET} to go back to the main menu"
+                    f"{Back.RESET} to go back to the main menu\n"
                 )
                 if i == "":
                     break
