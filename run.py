@@ -25,9 +25,8 @@ legend = {
     "player": "🧍 ",
     "wall": "🧱 ",
     "skeleton": "💀 ",
-    "dead": "⚰️ "
-    # Use for debugging
-    # "door": "E  "
+    "dead": "⚰️ ",
+    "door": "E  "
 }
 
 
@@ -52,7 +51,7 @@ class Entity:
         self.attack = attack
 
 
-level = 1
+level = 20
 skeletons = []
 skeleton_rooms = []
 
@@ -60,7 +59,7 @@ skeleton_rooms = []
 def set_entities():
     i = 1
     global player
-    player = Entity(0, 2, 1)
+    player = Entity(0, 20, 2)
     while i <= level:
         skel_pos = random.randint(3, 23)
         if i > 0:
@@ -136,7 +135,8 @@ def rules():
         f"{Fore.YELLOW}exit"
         f"{Fore.WHITE}.\n\nCareful though, "
         f"{Fore.RED}skeletons "
-        f"{Fore.WHITE}are guarding the area.\n\n"
+        f"{Fore.WHITE}are guarding the area. With each level, more "
+        "enemies will be guarding the dungeon\n\n"
         "You can rest to gain "
         f"{Fore.GREEN}health\n\n"
         f"{Fore.WHITE}Each turn, you will choose a direction to go, "
@@ -183,10 +183,9 @@ def create_map():
         rooms.append(room)
     # Assign player to room
     rooms[player.pos].status = "player"
-    # Use for debugging
-    # for i in range(len(skeletons)):
-    #    rooms[skeleton_rooms[i]].status = "skeleton"
-    # rooms[door].status = "door"
+    for i in range(len(skeletons)):
+        rooms[skeleton_rooms[i]].status = "skeleton"
+    rooms[door].status = "door"
 
 
 def player_action_choice():
@@ -486,12 +485,17 @@ if __name__ == "__main__":
     while True:
         set_entities()
         run_game()
-        if level >= 20:
-            print(
-                "You have reached the end of the game in its current status"
-                "Congratulations on your victory!"
-            )
-        if success == 1:
+        if level > 20:
+            while True:
+                i = input(
+                    "Congratulations! You have beat the game in its current "
+                    f"state of development. Press {Back.MAGENTA}Enter"
+                    f"{Back.RESET} to go \nback to the main menu"
+                )
+                if i == "":
+                    break
+                print(f"{i} is wrong, please press Enter...")
+        elif success == 1:
             while True:
                 i = input(
                     "\nYou have won the level! Would "

@@ -1,6 +1,6 @@
 # Coco's Dungeon Crawler
 
-This is a dungeon crawler style text based game developped in Python. The aim of the game is for the player to navigate through the dungeon to find the exit. Along the way they might find enemy skeletons which they will have to fight or evade.
+This is a dungeon crawler style text based game developped in Python. The aim of the game is for the player to navigate through the dungeon to find the exit. Along the way they might find enemy skeletons which they will have to fight or evade. A level system has been put in place. Each level has a corresponding amount of enemies (skeletons) on the map. This increases the difficulty and helps with replayability.
 
 
 ## Features
@@ -11,7 +11,7 @@ This game is a text based adventure. The player is asked to make a choice, wethe
 
 - __I - Starting page__
 
-The starting page offers the player a menu style choice, letting them choose between starting the game, reading the rules and the credits.
+The starting page offers the player a menu style choice, letting them choose between starting the game, reading the rules and the credits. It also informs the player on which level they will be playing.
 ![Starting page](documentation/starting-page.jpg)
 
   - __Rules__
@@ -69,10 +69,9 @@ The player is given a choice to fight or flee. Results are as follows:
 - __VI - End of game__
 
 The game ends in one of two ways:
-- The player is defeated by a skeleton, they die.
+- The player is defeated by a skeleton, they die. The player can choose to restart the game, in which case it resets to level 1, or to exit the program
 ![Defeat](documentation/defeat.jpg)
-- The player finds the exit, they win.
-The player can then decide to play again or exit the program
+- The player finds the exit, they win. They can decide to move onto the next level or exit the program
 ![Victory](documentation/victory.jpg)
 
 
@@ -115,6 +114,8 @@ class Entity:
         self.health = health
         self.attack = attack
 ```
+
+Skeletons are generated randomly, one for level one, two for level two and so on. Currently game stops at level 20, with 20 skeletons, the player and the exit generated on the map.
 
 - __Movement__
 
@@ -194,16 +195,17 @@ A variety of testing has been done during the development process. The two main 
 ![End of game input](documentation/input-end-game.jpg)
 
 ### Known issues:
-- If the player inputs "Ctrl + C" during the game, it creates a keyboard interruption, ending the program.
+- If the player inputs "Ctrl + C" (or "Cmnd + C" on Mac) during the game, it creates a keyboard interruption, ending the program.
 ![Ctrl + C](documentation/control-c.jpg)
 - On Mozilla Firefox browser, emojis are cut in half
 ![Mozilla Firefox](documentation/firefox.jpg)
 - If the player fails to flee and loses against the skeleton, screen jumps straight to defeat screen. Difficult to follow what happened for player.
+- The game currently has 25 "rooms". If we try to generate more than 20 skeletons the random generation takes very long and can cause some bugs. For this reason the game currently ends when the player reaches the exit on level 20.
 
 ### Tools and technologies used
 
 A number of tools were used for this project:
-- Programming - Python
+- Programming - Python, Colorama
 - Software - Heroku, GitHub, GitPod, GitHub issues
 Link to Open Issues: https://github.com/Corentin-Vidick/DungeonCrawler/issues
 ![GitHub issues](documentation/github-issues1.jpg)
@@ -279,7 +281,6 @@ The frontend terminal should now be connected and deployed to Heroku.
 - clear() function from https://stackoverflow.com/questions/2084508/clear-terminal-in-python
 - Object understanding through https://www.w3schools.com/python/python_classes.asp
 - Use of colorama from https://www.youtube.com/watch?v=u51Zjlnui4Y&ab_channel=TechWithTim
-
 - Intellectual property
   - All images and text are property of the developer, Corentin Vidick
   - GitPod repository can be found at [Dungeon Crawler repository](https://github.com/Corentin-Vidick/DungeonCrawler) solely developed by Corentin Vidick from 21/11/2022.
