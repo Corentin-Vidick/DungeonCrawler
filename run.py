@@ -54,6 +54,20 @@ class Entity:
 level = 20
 skeletons = []
 skeleton_rooms = []
+rooms = []
+
+
+class Room:
+    """
+    Creates an empty, dark room
+    status matches legend options
+    contents to add future objects (sword, shield...)
+    pos to mark room position in grid
+    """
+    def __init__(self, status, contents, pos):
+        self.status = status
+        self.contents = contents
+        self.pos = pos
 
 
 def set_entities():
@@ -72,22 +86,6 @@ def set_entities():
     door = random.randint(3, 23)
     while door in skeleton_rooms:
         door = random.randint(3, 23)
-
-
-rooms = []
-
-
-class Room:
-    """
-    Creates an empty, dark room
-    status matches legend options
-    contents to add future objects (sword, shield...)
-    pos to mark room position in grid
-    """
-    def __init__(self, status, contents, pos):
-        self.status = status
-        self.contents = contents
-        self.pos = pos
 
 
 def clear_screen():
@@ -136,7 +134,7 @@ def rules():
         f"{Fore.WHITE}.\n\nCareful though, "
         f"{Fore.RED}skeletons "
         f"{Fore.WHITE}are guarding the area. With each level, more "
-        "enemies will be guarding the dungeon\n\n"
+        "enemies  will be guarding the dungeon\n\n"
         "You can rest to gain "
         f"{Fore.GREEN}health\n\n"
         f"{Fore.WHITE}Each turn, you will choose a direction to go, "
@@ -159,7 +157,7 @@ def dev_credits():
     print(
         "\n\n\nThis game is developed by Corentin Vidick\n\n\n"
         "For the best experience play on Google Chrome browser. "
-        "Playing on another browser might cause issues "
+        "Playing on another \nbrowser might cause issues "
         "with the display of emoticons."
     )
     print(f"{Back.MAGENTA}\n\n\nPress Enter key to go back to menu")
@@ -489,8 +487,8 @@ if __name__ == "__main__":
             while True:
                 i = input(
                     "Congratulations! You have beat the game in its current "
-                    f"state of development. Press {Back.MAGENTA}Enter"
-                    f"{Back.RESET} to go \nback to the main menu"
+                    f"state of development.\nPress {Back.MAGENTA}Enter"
+                    f"{Back.RESET} to go back to the main menu"
                 )
                 if i == "":
                     break
