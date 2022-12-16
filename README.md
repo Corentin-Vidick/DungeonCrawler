@@ -73,6 +73,8 @@ The game ends in one of two ways:
 ![Defeat](documentation/defeat.jpg)
 - The player finds the exit, they win. They can decide to move onto the next level or exit the program
 ![Victory](documentation/victory.jpg)
+- The player beats level 20. They are prompted to go back to the main menu
+![End of game](documentation/win-game.jpg)
 
 
 ### Existing Features
@@ -116,6 +118,8 @@ class Entity:
 ```
 
 Skeletons are generated randomly, one for level one, two for level two and so on. Currently game stops at level 20, with 20 skeletons, the player and the exit generated on the map.
+As an example, here is level 20's map with skeleton positions and exit revealed (for development purposes only):
+![Level 20 map](documentation/level20-map-revealed.jpg)
 
 - __Movement__
 
@@ -191,8 +195,12 @@ A variety of testing has been done during the development process. The two main 
 ![Direction input](documentation/input-direction.jpg)
 #### Fight or flight:
 ![Fight or flight input](documentation/input-fight-or-flight.jpg)
+#### Victory:
+![Victory input]
+#### Defeat:
+![Defeat input]
 #### End of game:
-![End of game input](documentation/input-end-game.jpg)
+![End of game input](documentation/input-win.jpg)
 
 ### Known issues:
 - If the player inputs "Ctrl + C" (or "Cmnd + C" on Mac) during the game, it creates a keyboard interruption, ending the program.

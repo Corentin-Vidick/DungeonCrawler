@@ -25,8 +25,9 @@ legend = {
     "player": "🧍 ",
     "wall": "🧱 ",
     "skeleton": "💀 ",
-    "dead": "⚰️ ",
-    "door": "E "
+    "dead": "⚰️ "
+    # Use for debugging
+    # "door": "🚪 "
 }
 
 
@@ -51,7 +52,7 @@ class Entity:
         self.attack = attack
 
 
-level = 20
+level = 1
 skeletons = []
 skeleton_rooms = []
 rooms = []
@@ -73,7 +74,7 @@ class Room:
 def set_entities():
     i = 1
     global player
-    player = Entity(0, 20, 2)
+    player = Entity(0, 2, 1)
     while i <= level:
         skel_pos = random.randint(3, 23)
         if i > 0:
@@ -91,6 +92,7 @@ def set_entities():
 def clear_screen():
     """
     Clears terminal to improve UX
+    Code from: https://stackoverflow.com/questions/2084508/clear-terminal-in-python
     """
     print("")   # Allows Colorama to reset colors to default
     os.system("cls" if os.name == "nt" else "clear")
@@ -181,9 +183,12 @@ def create_map():
         rooms.append(room)
     # Assign player to room
     rooms[player.pos].status = "player"
+    """
+    Use for debugging - shows skeletons and door on map
     for i in range(len(skeletons)):
         rooms[skeleton_rooms[i]].status = "skeleton"
     rooms[door].status = "door"
+    """
 
 
 def player_action_choice():
@@ -488,7 +493,7 @@ if __name__ == "__main__":
                 i = input(
                     "Congratulations! You have beat the game in its current "
                     f"state of development.\nPress {Back.MAGENTA}Enter"
-                    f"{Back.RESET} to go back to the main menu\n"
+                    f"{Back.RESET} to exit the game\n"
                 )
                 if i == "":
                     break
@@ -515,7 +520,7 @@ if __name__ == "__main__":
                 if i in ("1", "2"):
                     break
                 print(f"{i} is wrong, please choose a valid option...")
-        if i == "2":
+        if i == "2" or i == "":
             break
         # Reset all entities for next game
         rooms = []
