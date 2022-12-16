@@ -3,6 +3,10 @@
 This is a dungeon crawler style text based game developped in Python. The aim of the game is for the player to navigate through the dungeon to find the exit. Along the way they might find enemy skeletons which they will have to fight or evade. A level system has been put in place. Each level has a corresponding amount of enemies (skeletons) on the map. This increases the difficulty and helps with replayability.
 
 
+## Important notes:
+Most screenshots were taken before the use of Colorama. Screenshots where the use of Colorama is not reflected mean that no functional changes were made to the function, only color changes for UX purposes.
+
+
 ## Features
 
 This game is a text based adventure. The player is asked to make a choice, wether which direction to go, if they want to rest (possibility to gain health) or if they want to fight a skeleton or try to evade it. The game then calculates and informs the player on the results of their decision
@@ -195,10 +199,10 @@ A variety of testing has been done during the development process. The two main 
 ![Direction input](documentation/input-direction.jpg)
 #### Fight or flight:
 ![Fight or flight input](documentation/input-fight-or-flight.jpg)
-#### Victory:
-![Victory input]
+#### Level victory:
+![Victory input](documentation/input-levelwin.jpg)
 #### Defeat:
-![Defeat input]
+![Defeat input](documentation/input-defeat.jpg)
 #### End of game:
 ![End of game input](documentation/input-win.jpg)
 
