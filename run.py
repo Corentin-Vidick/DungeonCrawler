@@ -72,6 +72,11 @@ class Room:
 
 
 def set_entities():
+    """
+    Places all entities on map, player in room 0, 1 skeleton per
+    level and the exit. Checks so skeletons and exit
+    don't overlap
+    """
     i = 1
     global player
     player = Entity(0, 2, 1)
@@ -92,7 +97,8 @@ def set_entities():
 def clear_screen():
     """
     Clears terminal to improve UX
-    Code from: https://stackoverflow.com/questions/2084508/clear-terminal-in-python
+    Code from:
+    https://stackoverflow.com/questions/2084508/clear-terminal-in-python
     """
     print("")   # Allows Colorama to reset colors to default
     os.system("cls" if os.name == "nt" else "clear")
